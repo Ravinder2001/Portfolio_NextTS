@@ -1,0 +1,52 @@
+.container {
+  width: 100%;
+  height: auto;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg clip-path='url(%26quot%3b%23SvgjsClipPath1118%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='%2332325d'%3e%3c/rect%3e%3ccircle r='43.93' cx='101.43' cy='357.27' fill='url(%26quot%3b%23SvgjsLinearGradient1119%26quot%3b)'%3e%3c/circle%3e%3ccircle r='54.37' cx='151.76' cy='393.8' fill='%2343468b'%3e%3c/circle%3e%3ccircle r='27.015' cx='918.86' cy='95.38' fill='url(%26quot%3b%23SvgjsLinearGradient1120%26quot%3b)'%3e%3c/circle%3e%3ccircle r='23.785' cx='1401.32' cy='155.88' fill='url(%26quot%3b%23SvgjsLinearGradient1121%26quot%3b)'%3e%3c/circle%3e%3ccircle r='36.115' cx='761.22' cy='515.22' fill='url(%26quot%3b%23SvgjsLinearGradient1122%26quot%3b)'%3e%3c/circle%3e%3ccircle r='24.065' cx='226.33' cy='518.01' fill='url(%26quot%3b%23SvgjsLinearGradient1123%26quot%3b)'%3e%3c/circle%3e%3ccircle r='49.49' cx='273.66' cy='332.43' fill='url(%26quot%3b%23SvgjsLinearGradient1124%26quot%3b)'%3e%3c/circle%3e%3ccircle r='33.42' cx='1291.27' cy='466.58' fill='url(%26quot%3b%23SvgjsLinearGradient1125%26quot%3b)'%3e%3c/circle%3e%3c/g%3e%3cdefs%3e%3cclipPath id='SvgjsClipPath1118'%3e%3crect width='1440' height='560' x='0' y='0'%3e%3c/rect%3e%3c/clipPath%3e%3clinearGradient x1='13.570000000000007' y1='357.27' x2='189.29000000000002' y2='357.27' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1119'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='864.83' y1='95.38' x2='972.8900000000001' y2='95.38' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1120'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1353.75' y1='155.88' x2='1448.89' y2='155.88' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1121'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='688.99' y1='515.22' x2='833.45' y2='515.22' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1122'%3e%3cstop stop-color='%23ab3c51' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%234f4484' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='178.20000000000002' y1='518.01' x2='274.46000000000004' y2='518.01' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1123'%3e%3cstop stop-color='%23f29b7c' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%237e6286' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='174.68' y1='332.43' x2='372.64' y2='332.43' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1124'%3e%3cstop stop-color='%2384b6e0' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23464a8f' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='1224.43' y1='466.58000000000004' x2='1358.1100000000001' y2='466.58000000000004' gradientUnits='userSpaceOnUse' id='SvgjsLinearGradient1125'%3e%3cstop stop-color='%23e298de' offset='0.1'%3e%3c/stop%3e%3cstop stop-color='%23484687' offset='0.9'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.box {
+  width: 60%;
+  height: 300px;
+  background-color: white;
+  display: flex;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+.left {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.right {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+.sub {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+.img {
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgb(170, 26, 243);
+  padding: 10px;
+}

@@ -1,0 +1,26 @@
+.input {
+  border: none;
+  border: 1px solid rgb(177, 176, 176);
+  border-radius: 4px;
+  padding: 10px 5px;
+  width: 100%;
+  margin-top: 5px;
+  font-family: var(font);
+  font-size: 16px;
+}
+.input:focus {
+  outline: none;
+}
+.textarea {
+  border: none;
+  border: 1px solid rgb(177, 176, 176);
+  border-radius: 4px;
+  padding: 10px 5px;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 16px;
+  resize: vertical;
+}
+.textarea:focus {
+  outline: none;
+}

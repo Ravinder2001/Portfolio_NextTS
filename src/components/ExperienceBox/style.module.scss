@@ -1,0 +1,32 @@
+.container {
+  background-color: rgb(218, 218, 218);
+  // border: 1px double red;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.box {
+  margin-bottom: 20px;
+  margin-top: -70px;
+  border-radius: 4px;
+  height: auto;
+  width: 90%;
+  margin-right: 50px;
+  background-color: white;
+  padding: 10px;
+  // border: 1px solid red;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 40px;
+  margin-top: 10px;
+}
+.body {
+  display: flex;
+}
+.des {
+  width: 50%;
+}

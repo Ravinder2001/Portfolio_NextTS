@@ -1,0 +1,129 @@
+.container{
+  width: 100%;
+  height: auto;
+  // border: 1px solid red;
+}
+.container1 {
+  margin-bottom: 10px;
+  margin-top: 50px;
+  height: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid gray;
+  /* padding: 100px 0;  */
+  /* background-color: #111; */
+}
+
+
+.timeline {
+  width: 90%;
+  height: auto;
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+}
+.timeline ul {
+  list-style: none;
+}
+.timeline ul li {
+  padding: 20px;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(202, 248, 245, 1) 0%, rgba(158, 229, 245, 1) 100%);
+}
+.timeline ul li:last-child {
+  margin-bottom: 20px !important;
+}
+.timeline_content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.timeline_content_rev {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.company_name {
+  color: black;
+  font-size: 24px;
+ 
+}
+.role {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.duration {
+  color: rgb(61, 61, 61);
+  font-size: 16px;
+  margin-top: 5px;
+  
+}
+.about {
+  margin-top: 10px;
+  color: black;
+  font-size: 16px;
+  
+}
+.img{
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+@media only screen and (min-width: 768px) {
+  .timeline:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: gray;
+  }
+  .timeline ul li {
+    width: 50%;
+    position: relative;
+    margin-bottom: 50px;
+  }
+  .timeline ul li:nth-child(odd) {
+    float: left;
+    clear: right;
+    transform: translateX(-30px);
+    border-radius: 20px 0px 20px 20px;
+  }
+  .timeline ul li:nth-child(even) {
+    float: right;
+    clear: left;
+    transform: translateX(30px);
+    border-radius: 0px 20px 20px 20px;
+  }
+  .timeline ul li::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    top: 0px;
+  }
+  .timeline ul li:nth-child(odd)::before {
+    transform: translate(50%, -50%);
+    right: -30px;
+  }
+  .timeline ul li:nth-child(even)::before {
+    transform: translate(-50%, -50%);
+    left: -30px;
+  }
+
+  .timeline ul li:hover::before {
+    background-color: white;
+  }
+}

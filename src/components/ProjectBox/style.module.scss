@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  height: auto;
+  background: radial-gradient(39.56% 48.29% at 20% 115.78%, #ff1675 0%, rgba(255, 22, 121, 0) 100%)
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(54.23% 74.52% at 69.72% -10.08%, #ff1675 0%, rgba(255, 22, 121, 0) 100%)
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(21.67% 31.7% at 39.72% 107.79%, rgba(74, 51, 209, 0.8) 0%, rgba(74, 51, 209, 0) 100%)
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(40.08% 51.33% at 85.83% 24.14%, rgba(74, 51, 209, 0.8) 0%, rgba(74, 51, 209, 0) 100%)
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    #242145;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.heading {
+  color: white;
+  margin-left: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  //   font-size: 72px;
+  background: linear-gradient(to right, #8162df, #fa7923, #ed1bed, #f5e676);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
