@@ -2,12 +2,10 @@ import { Schema, model, models } from "mongoose";
 
 const ReviewSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
-    
     },
-
     name: {
       type: String,
       required: true,
@@ -18,6 +16,10 @@ const ReviewSchema = new Schema(
     },
     des: {
       type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
       required: true,
     },
   },

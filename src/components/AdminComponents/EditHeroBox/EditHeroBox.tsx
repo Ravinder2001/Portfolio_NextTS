@@ -14,6 +14,7 @@ type valuesType = {
   role: string;
   des: string;
   location: string;
+  id?: string;
 };
 function EditHeroBox() {
   const { data: session } = useSession();
@@ -24,8 +25,6 @@ function EditHeroBox() {
     location: "",
   });
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [editId, setEditId] = useState<string>("");
-  console.log("🚀  editId:", editId);
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -40,27 +39,8 @@ function EditHeroBox() {
 
   const handleSubmit = async () => {
     try {
-      let body = { ...values, user_id: session?.user.id };
+      let body = { ...values, image: "sss", relation_id: "1" };
       const res = await axios.post("/api/hero", body);
-
-      if (res?.status == 200) {
-        Swal.fire({
-          icon: "success",
-          title: res?.data?.message,
-        });
-      }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
-  };
-  const handleEditHero = async () => {
-    try {
-      let body = { ...values, id: editId };
-      const res = await axios.put("/api/hero", body);
 
       if (res?.status == 200) {
         Swal.fire({
@@ -82,7 +62,6 @@ function EditHeroBox() {
       const res = await axios.get("/api/hero");
       if (res?.data?.data) {
         setValues(res.data.data);
-        setEditId(res.data.data._id);
       }
     } catch (err: any) {
       Swal.fire({
@@ -149,7 +128,7 @@ function EditHeroBox() {
           placeholder="Location"
         />
       </div>
-      <div className={styles.btn} onClick={editId.length ? handleEditHero : handleSubmit}>
+      <div className={styles.btn} onClick={handleSubmit}>
         Submit
       </div>
     </div>

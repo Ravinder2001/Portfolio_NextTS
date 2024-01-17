@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 
 const HeroSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
       unique: true,
@@ -20,6 +20,10 @@ const HeroSchema = new Schema(
       required: true,
     },
     location: {
+      type: String,
+      required: true,
+    },
+    image: {
       type: String,
       required: true,
     },

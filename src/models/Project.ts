@@ -2,9 +2,10 @@ import { Schema, model, models } from "mongoose";
 
 const ProjectSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
+      
     },
     name: {
       type: String,
@@ -20,6 +21,10 @@ const ProjectSchema = new Schema(
     },
     image: {
       type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
       required: true,
     },
     tech: [

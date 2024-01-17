@@ -2,10 +2,11 @@ import { Schema, model, models } from "mongoose";
 
 const ContactSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
     },
+
     name: {
       type: String,
       required: true,

@@ -2,7 +2,7 @@ import { Schema, model, models } from "mongoose";
 
 const ExperienceSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
     },
@@ -22,8 +22,12 @@ const ExperienceSchema = new Schema(
       type: String,
       required: true,
     },
-    logo: {
+    image: {
       type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
       required: true,
     },
   },

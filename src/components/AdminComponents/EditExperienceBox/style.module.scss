@@ -34,9 +34,6 @@
   cursor: pointer;
 }
 
-.upload {
-  margin-top: 5px;
-}
 
 .main {
   width: 100%;
@@ -44,6 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: auto;
 }
 .left{
   width: 60%;
@@ -54,4 +52,5 @@
   border: 2px solid rgb(218, 216, 216);
   height: 100%;
   border-radius: 4px;
+  overflow: auto;
 }

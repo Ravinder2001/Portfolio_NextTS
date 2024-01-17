@@ -7,16 +7,21 @@ import StackTable from "../StackTable/StackTable";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
+import ImageBox from "../ImageBox/ImageBox";
+import { convertToBase64 } from "@/utils/Function";
 
 type valuesType = {
   title: string;
   des: string;
+  image: string;
+  _id?: string;
 };
 function EditAboutBox() {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     title: "",
     des: "",
+    image: "",
   });
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
@@ -30,13 +35,22 @@ function EditAboutBox() {
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const res = await convertToBase64(e.target.files[0]);
+      setValues((prev) => ({ ...prev, image: res }));
+    }
+  };
+  const handleRemove = () => {
+    setValues((prev) => ({ ...prev, image: "" }));
+  };
 
   const handleSubmit = async () => {
     try {
       let body = {
         ...values,
         user_id: session?.user.id,
-        image: "aa",
+        relation_id: "1",
       };
       const res = await axios.post("/api/about", body);
 
@@ -58,6 +72,9 @@ function EditAboutBox() {
   const FetchExistingAboutDetails = async () => {
     try {
       const res = await axios.get("/api/about");
+      if (res?.data?.data) {
+        setValues(res?.data?.data);
+      }
     } catch (err: any) {
       console.log(err.message);
     }
@@ -98,9 +115,10 @@ function EditAboutBox() {
           row={3}
         />
       </div>
+
       <div className={styles.box}>
         <div className={styles.label}>Image</div>
-        <input type="file" className={styles.upload} />
+        <ImageBox id="" image={values.image} handleImage={handleImage} handleRemove={handleRemove} />
       </div>
 
       <div className={styles.btn} onClick={handleSubmit}>

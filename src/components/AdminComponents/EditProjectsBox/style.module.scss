@@ -44,14 +44,50 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow: auto;
 }
-.left{
+.left {
   width: 60%;
   height: 100%;
 }
-.right{
+.right {
   width: 38%;
   border: 2px solid rgb(218, 216, 216);
   height: 100%;
   border-radius: 4px;
+}
+
+.add {
+  background-color: green;
+  color: white;
+  width: 25px;
+  height: 25px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  // padding: 10px;
+}
+.techBox {
+  display: flex;
+  flex-wrap: wrap;
+}
+.techContainer {
+  border: 1px solid rgb(178, 176, 176);
+  width: 140px;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 4px;
+}
+.techInput {
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 5px;
+  padding: 5px 5px;
+  border: none;
+  border: 1px solid rgb(203, 202, 202);
+}
+.techInput:focus {
+  outline: none;
 }

@@ -7,19 +7,32 @@ import StackTable from "../StackTable/StackTable";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import RightBox from "./RightBox/RightBox";
 
 type valuesType = {
   name: string;
   des: string;
   star: number;
+  _id?: string;
+  active: boolean;
 };
+type existingReviews = {
+  name: string;
+  des: string;
+  star: number;
+  _id: string;
+  active: boolean;
+};
+
 function EditReviewsBox() {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     name: "",
     star: 0,
     des: "",
+    active: true,
   });
+  const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const ToogleVisible = () => {
@@ -32,35 +45,21 @@ function EditReviewsBox() {
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  const handleStarChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setValues((prev: any) => ({ ...prev, star: e.target.value }));
+  };
+
+  const handleEditClick = (e: existingReviews) => {
+    setValues(e);
+  };
 
   const handleSubmit = async () => {
     try {
       let body = {
         ...values,
-        user_id: session?.user.id,
+        relation_id: "1",
       };
       const res = await axios.post("/api/review", body);
-
-      if (res?.status == 200) {
-        Swal.fire({
-          icon: "success",
-          title: res?.data?.message,
-        });
-      }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
-  };
-  const handleAddSkill = async () => {
-    try {
-      let body = {
-        ...values,
-      };
-      const res = await axios.put(`/api/review/${session?.user.id}`, body);
 
       if (res?.status == 200) {
         Swal.fire({
@@ -79,14 +78,17 @@ function EditReviewsBox() {
 
   const FetchExistingReviews = async () => {
     try {
-      const res=await axios.get("/api/review")
+      const res = await axios.get("/api/review");
+      if (res?.data?.data) {
+        setExistingReviews(res?.data?.data);
+      }
     } catch (err: any) {
       console.log(err.message);
     }
   };
-  useEffect(()=>{
-    FetchExistingReviews()
-  },[])
+  useEffect(() => {
+    FetchExistingReviews();
+  }, []);
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>
@@ -110,7 +112,8 @@ function EditReviewsBox() {
           </div>
           <div className={styles.box}>
             <div className={styles.label}>Star</div>
-            <select name="" id="">
+            <select name="" id="" value={values.star} onChange={handleStarChange}>
+              <option value="0">Select Star</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -136,7 +139,9 @@ function EditReviewsBox() {
             Submit
           </div>
         </div>
-        <div className={styles.right}>Left</div>
+        <div className={styles.right}>
+          <RightBox existingData={existingReviews} handleEditClick={handleEditClick} />
+        </div>
       </div>
     </div>
   );

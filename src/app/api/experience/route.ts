@@ -7,8 +7,13 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     await connectToDB();
-    await Experience.create(body);
-    return new Response(JSON.stringify({ message: "Experience Details Added" }), { status: 200 });
+    if (!body._id) {
+      await Experience.create(body);
+      return new Response(JSON.stringify({ message: "Experience Details Added" }), { status: 200 });
+    } else {
+      await Experience.updateOne({ _id: body._id }, body);
+      return new Response(JSON.stringify({ message: "Experience Details Edited" }), { status: 200 });
+    }
   } catch (err: any) {
     return new Response(err.message, { status: 400 });
   }
@@ -18,7 +23,7 @@ export const GET = async () => {
     const userSession = await getServerSession(authoptions);
 
     await connectToDB();
-    const data = await Experience.find({ user_id: userSession?.user.id }, { _id: 1, company: 1, role: 1, des: 1, duration: 1, logo: 1 });
+    const data = await Experience.find({ user_id: userSession?.user.id }, { _id: 1, company: 1, role: 1, des: 1, duration: 1, image: 1 });
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (err: any) {
     return new Response(err.message, { status: 400 });

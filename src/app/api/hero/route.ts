@@ -10,21 +10,13 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     await connectToDB();
-    await Hero.create(body);
-
-    return new Response(JSON.stringify({ message: "Hero details Added Succesfully" }), { status: 200 });
-  } catch (error: any) {
-    return new Response(error.message, { status: 400 });
-  }
-};
-export const PUT = async (request: Request) => {
-  try {
-    
-    const body = await request.json();
-    await connectToDB();
-    await Hero.updateOne({ _id: body._id }, body);
-
-    return new Response(JSON.stringify({ message: "Hero details Updated Succesfully" }), { status: 200 });
+    if (!body._id) {
+      await Hero.create(body);
+      return new Response(JSON.stringify({ message: "Hero details Added Succesfully" }), { status: 200 });
+    } else {
+      await Hero.updateOne({ _id: body._id }, body);
+      return new Response(JSON.stringify({ message: "Hero details Edited Succesfully" }), { status: 200 });
+    }
   } catch (error: any) {
     return new Response(error.message, { status: 400 });
   }
@@ -37,7 +29,7 @@ export const GET = async () => {
       return new Response("Unauthorized", { status: 401 });
     }
     await connectToDB();
-    const data = await Hero.findOne({ user_id: user_session?.user.id }, { _id: 1, title: 1, role: 1, des: 1, location: 1 });
+    const data = await Hero.findOne({ user_id: user_session?.user.id }, { _id: 1, title: 1, role: 1, des: 1, location: 1,image:1 });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (error: any) {

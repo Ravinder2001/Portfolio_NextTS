@@ -2,10 +2,9 @@ import { Schema, model, models } from "mongoose";
 
 const SkillSchema = new Schema(
   {
-    user_id: {
+    relation_id: {
       type: String,
       required: true,
-
     },
     name: {
       type: String,
@@ -13,6 +12,10 @@ const SkillSchema = new Schema(
     },
     image: {
       type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
       required: true,
     },
   },

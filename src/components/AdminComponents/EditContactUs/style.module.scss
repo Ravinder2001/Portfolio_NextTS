@@ -18,7 +18,7 @@
   font-size: 20px;
 }
 .box {
-    margin-top: 20px;
+  margin-top: 20px;
   width: 100%;
 }
 .title {
@@ -38,4 +38,16 @@
   width: 80%;
   border: none;
   border-bottom: 1px solid rgb(212, 211, 211);
+}
+.btn {
+  background-color: black;
+  color: white;
+  width: 100px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
 }
