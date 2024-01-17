@@ -8,6 +8,11 @@ import { authoptions } from "../auth/[...nextauth]/route";
 
 export const POST = async (request: Request) => {
   try {
+    const userSession = await getServerSession(authoptions);
+
+    if (!userSession) {
+      return new Response("Unauthorized", { status: 401 });
+    }
     const body = await request.json();
     await connectToDB();
     if (!body._id) {
@@ -23,13 +28,13 @@ export const POST = async (request: Request) => {
 };
 export const GET = async () => {
   try {
-    const user_session = await getServerSession(authoptions);
+    const userSession = await getServerSession(authoptions);
 
-    if (!user_session) {
+    if (!userSession) {
       return new Response("Unauthorized", { status: 401 });
     }
     await connectToDB();
-    const data = await Hero.findOne({ user_id: user_session?.user.id }, { _id: 1, title: 1, role: 1, des: 1, location: 1,image:1 });
+    const data = await Hero.findOne({ relaiton_id: userSession?.user.name }, { _id: 1, title: 1, role: 1, des: 1, location: 1, image: 1 });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (error: any) {

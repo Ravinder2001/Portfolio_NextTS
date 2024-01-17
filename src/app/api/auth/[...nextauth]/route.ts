@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { connectToDB } from "../../../../../lib/Database";
 import User from "@/models/User";
 
-
 export const authoptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -24,6 +23,7 @@ export const authoptions: NextAuthOptions = {
           if (!user) {
             return null;
           } else if (user?.password == password) {
+            user.name = user.relation_id;
             return user;
           } else {
             return null;

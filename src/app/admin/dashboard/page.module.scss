@@ -1,11 +1,22 @@
 .container {
 }
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+}
 .heading {
   font-size: 24px;
   padding: 10px;
   //   font-weight: bold;
-  background-color: black;
+
   color: white;
+}
+.logout{
+  color: white;
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 .box {

@@ -57,7 +57,7 @@ function EditReviewsBox() {
     try {
       let body = {
         ...values,
-        relation_id: "1",
+        relation_id: session?.user.name,
       };
       const res = await axios.post("/api/review", body);
 

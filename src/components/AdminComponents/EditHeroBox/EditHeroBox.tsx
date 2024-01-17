@@ -39,7 +39,7 @@ function EditHeroBox() {
 
   const handleSubmit = async () => {
     try {
-      let body = { ...values, image: "sss", relation_id: "1" };
+      let body = { ...values, image: "sss", relation_id: session?.user.name};
       const res = await axios.post("/api/hero", body);
 
       if (res?.status == 200) {

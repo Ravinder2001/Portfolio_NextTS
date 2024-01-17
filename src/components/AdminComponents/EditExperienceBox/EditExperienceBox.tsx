@@ -69,7 +69,7 @@ function EditExperienceBox() {
 
   const handleSubmit = async () => {
     try {
-      let body = { ...values, relation_id: "1" };
+      let body = { ...values, relation_id: session?.user.name };
       const res = await axios.post("/api/experience", body);
 
       if (res?.status == 200) {

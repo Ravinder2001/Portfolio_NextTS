@@ -74,7 +74,7 @@ function EditSkillsBox() {
           techTempStack.push({
             name: item.name,
             image: item.image,
-            relation_id: "1",
+            relation_id: session?.user.name,
             active: item.active,
             _id: item._id,
           });

@@ -13,6 +13,7 @@ import EditSkillsBox from "@/components/AdminComponents/EditSkillsBox/EditSkills
 import EditReviewsBox from "@/components/AdminComponents/EditReviewsBox/EditReviewsBox";
 import EditAboutBox from "@/components/AdminComponents/EditAboutBox/EditAboutBox";
 import EditContactUs from "@/components/AdminComponents/EditContactUs/EditContactUs";
+import { signOut } from "next-auth/react";
 
 function Page() {
   const sectionList = useSelector((state: RootState) => state.SectionListReducer.list);
@@ -20,7 +21,10 @@ function Page() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.heading}>Welcome to Portfolio Dashboard</div>
+      <div className={styles.navbar}>
+        <div className={styles.heading}>Welcome to Portfolio Dashboard</div>
+        <div className={styles.logout} onClick={()=>signOut()}>Logout</div>
+      </div>
       <div className={styles.box}>
         <div className={styles.leftBox}>
           <div>Section List</div>

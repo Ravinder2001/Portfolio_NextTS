@@ -133,7 +133,7 @@ function EditProjectsBox() {
       let body = {
         ...values,
         tech: techTempStack,
-        relation_id: "1",
+        relation_id: session?.user.name,
       };
       const res = await axios.post("/api/project", body);
 

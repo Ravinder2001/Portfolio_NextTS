@@ -73,19 +73,19 @@ function EditContactUs() {
           name: options.linkedin,
           link: "https://www.linkedin.com/feed/",
           active: true,
-          relation_id: "1",
+          relation_id: session?.user.name,
         },
         {
           name: options.github,
           link: "https://github.com/",
           active: true,
-          relation_id: "1",
+          relation_id: session?.user.name,
         },
         {
           name: options.whatsapp,
           link: "https://web.whatsapp.com/",
           active: true,
-          relation_id: "1",
+          relation_id: session?.user.name,
         },
       ];
       await axios.post(`/api/contact`, body);

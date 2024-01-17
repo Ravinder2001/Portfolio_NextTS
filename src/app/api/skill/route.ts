@@ -5,6 +5,11 @@ import { authoptions } from "../auth/[...nextauth]/route";
 
 export const POST = async (request: Request) => {
   try {
+    const userSession = await getServerSession(authoptions);
+
+    if (!userSession) {
+      return new Response("Unauthorized", { status: 401 });
+    }
     const body = await request.json();
     await connectToDB();
 
@@ -30,8 +35,12 @@ export const GET = async (request: Request) => {
   try {
     const userSession = await getServerSession(authoptions);
 
+    if (!userSession) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
     await connectToDB();
-    const data = await Skill.find({ user_id: userSession?.user.id }, { _id: 1, name: 1, image: 1 });
+    const data = await Skill.find({ relaiton_id: userSession?.user.name }, { _id: 1, name: 1, image: 1 });
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (err: any) {
     return new Response(err.message, { status: 400 });

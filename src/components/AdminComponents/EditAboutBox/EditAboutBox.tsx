@@ -49,8 +49,7 @@ function EditAboutBox() {
     try {
       let body = {
         ...values,
-        user_id: session?.user.id,
-        relation_id: "1",
+        relation_id: session?.user.name,
       };
       const res = await axios.post("/api/about", body);
 
