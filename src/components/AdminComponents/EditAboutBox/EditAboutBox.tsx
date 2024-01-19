@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import ImageBox from "../ImageBox/ImageBox";
 import { convertToBase64 } from "@/utils/Function";
+import Loader from "../Loader/Loader";
+import ProfileImageBox from "../ProfileImageBox/ProfileImageBox";
 
 type valuesType = {
   title: string;
@@ -24,6 +26,7 @@ function EditAboutBox() {
     image: "",
   });
   const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -82,6 +85,7 @@ function EditAboutBox() {
   };
 
   const FetchExistingAboutDetails = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/api/about");
       if (res?.data?.data) {
@@ -90,6 +94,7 @@ function EditAboutBox() {
     } catch (err: any) {
       console.log(err.message);
     }
+    setLoading(false);
   };
   useEffect(() => {
     FetchExistingAboutDetails();
@@ -102,40 +107,45 @@ function EditAboutBox() {
           <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
         </div>
       </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <div className={styles.box}>
+            <div className={styles.label}>Title</div>
+            <InputBox
+              name="title"
+              value={values.title}
+              handleTextAreaChange={handleTextAreaChange}
+              handleChange={handleChange}
+              type="text"
+              placeholder="Title"
+            />
+          </div>
 
-      <div className={styles.box}>
-        <div className={styles.label}>Title</div>
-        <InputBox
-          name="title"
-          value={values.title}
-          handleTextAreaChange={handleTextAreaChange}
-          handleChange={handleChange}
-          type="text"
-          placeholder="Title"
-        />
-      </div>
+          <div className={styles.box}>
+            <div className={styles.label}>Description</div>
+            <InputBox
+              name="des"
+              value={values.des}
+              handleTextAreaChange={handleTextAreaChange}
+              handleChange={handleChange}
+              type="textarea"
+              placeholder="Description"
+              row={3}
+            />
+          </div>
 
-      <div className={styles.box}>
-        <div className={styles.label}>Description</div>
-        <InputBox
-          name="des"
-          value={values.des}
-          handleTextAreaChange={handleTextAreaChange}
-          handleChange={handleChange}
-          type="textarea"
-          placeholder="Description"
-          row={3}
-        />
-      </div>
+          <div className={styles.box}>
+            <div className={styles.label}>Image</div>
+            <ProfileImageBox id="" image={values.image} handleImage={handleImage} handleRemove={handleRemove} />
+          </div>
 
-      <div className={styles.box}>
-        <div className={styles.label}>Image</div>
-        <ImageBox id="" image={values.image} handleImage={handleImage} handleRemove={handleRemove} />
-      </div>
-
-      <div className={styles.btn} onClick={handleSubmit}>
-        Submit
-      </div>
+          <div className={styles.btn} onClick={handleSubmit}>
+            Submit
+          </div>
+        </div>
+      )}
     </div>
   );
 }

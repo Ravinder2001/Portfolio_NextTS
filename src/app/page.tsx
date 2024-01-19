@@ -13,7 +13,6 @@ import ContactBox from "@/components/ContactBox/ContactBox";
 function page() {
   return (
     <div className={styles.container}>
-      
       <Navbar />
       <Herobox />
       <ExperienceBox />

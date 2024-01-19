@@ -42,7 +42,7 @@ function EditExperienceBox() {
 
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [existingData, setExistingData] = useState<existingDataType[]>([]);
-  const [isEdit, setIsEdit] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true)
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -63,7 +63,6 @@ function EditExperienceBox() {
   const handleEditClick = (e: valuesType) => {
     if (e?._id) {
       setValues(e);
-      setIsEdit(e._id);
     }
   };
 
@@ -101,6 +100,7 @@ function EditExperienceBox() {
   };
 
   const FetchExistingExpDetails = async () => {
+    setLoading(true)
     try {
       const res = await axios.get(`/api/experience`);
       setExistingData(res?.data?.data);
@@ -111,6 +111,7 @@ function EditExperienceBox() {
         text: "Something went wrong!",
       });
     }
+    setLoading(false)
   };
   useEffect(() => {
     FetchExistingExpDetails();
@@ -179,7 +180,7 @@ function EditExperienceBox() {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingData} handleEditClick={handleEditClick} />
+          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} />
         </div>
       </div>
     </div>

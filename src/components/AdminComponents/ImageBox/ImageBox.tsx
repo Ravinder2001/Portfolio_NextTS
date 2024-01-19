@@ -21,14 +21,16 @@ function ImageBox(props: props) {
 
   return (
     <div className={styles.container}>
-      {image.length ? <Image src={image} className={styles.image} width={100} height={100} alt="" /> : null}
-      <input type="file" ref={ref} onChange={(e) => handleImage(e, id)} className={styles.input} />
-      <div className={styles.btn_group}>
-        <div className={styles.btn} onClick={handleClick}>
-          {image.length ? "Change" : "Upload"}
-        </div>
-        <div className={styles.btn} onClick={() => handleRemove(id)}>
-          Remove
+      <div className={styles.main}>
+        {image.length ? <Image src={image} className={styles.image} width={100} height={100} alt="" /> : null}
+        <input type="file" ref={ref} onChange={(e) => handleImage(e, id)} className={styles.input} />
+        <div className={styles.btn_group}>
+          <div className={styles.btn} onClick={handleClick}>
+            {image.length ? "Change" : "Upload"}
+          </div>
+          <div className={styles.btn} onClick={() => handleRemove(id)}>
+            Remove
+          </div>
         </div>
       </div>
     </div>

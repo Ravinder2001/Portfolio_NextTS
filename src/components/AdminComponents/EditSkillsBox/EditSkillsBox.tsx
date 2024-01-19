@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import ImageBox from "../ImageBox/ImageBox";
 import { convertToBase64 } from "@/utils/Function";
 import { nanoid } from "nanoid";
+import Loader from "../Loader/Loader";
 
 type SkillType = {
   _id: string;
@@ -19,7 +20,7 @@ function EditSkillsBox() {
   const { data: session } = useSession();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [skills, setSkills] = useState<SkillType[]>([]);
-  const [isExists, setIsExists] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -127,17 +128,16 @@ function EditSkillsBox() {
     });
   };
   const FetchExistingSkills = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/api/skill");
       if (res?.status == 200) {
         setSkills(res?.data?.data);
-        if (res?.data?.data.length) {
-          setIsExists(true);
-        }
       }
     } catch (err: any) {
       console.log(err.message);
     }
+    setLoading(false);
   };
   useEffect(() => {
     FetchExistingSkills();
@@ -150,30 +150,36 @@ function EditSkillsBox() {
           <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
         </div>
       </div>
-      <div className={styles.box}>
-        <div className={styles.label}>Tech Stacks</div>
-        <div className={styles.add} onClick={addNewTech}>
-          +
-        </div>
-        <div className={styles.techBox}>
-          {skills.map((tech) => (
-            <div key={tech._id} className={styles.techContainer}>
-              <input
-                type="text"
-                name={tech._id}
-                value={tech.name}
-                onChange={(e) => handleTechNameChange(e, tech._id)}
-                placeholder="Add Skill Name"
-                className={styles.techInput}
-              />
-              <ImageBox handleImage={handleTechImage} image={tech.image} handleRemove={removeTechStack} id={tech._id} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <div className={styles.box}>
+            <div className={styles.label}>Tech Stacks</div>
+            <div className={styles.add} onClick={addNewTech}>
+              +
             </div>
-          ))}
+            <div className={styles.techBox}>
+              {skills.map((tech) => (
+                <div key={tech._id} className={styles.techContainer}>
+                  <input
+                    type="text"
+                    name={tech._id}
+                    value={tech.name}
+                    onChange={(e) => handleTechNameChange(e, tech._id)}
+                    placeholder="Add Skill Name"
+                    className={styles.techInput}
+                  />
+                  <ImageBox handleImage={handleTechImage} image={tech.image} handleRemove={removeTechStack} id={tech._id} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.btn} onClick={handleSubmit}>
+            Submit
+          </div>
         </div>
-      </div>
-      <div className={styles.btn} onClick={handleSubmit}>
-        Submit
-      </div>
+      )}
     </div>
   );
 }

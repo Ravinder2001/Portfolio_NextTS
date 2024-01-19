@@ -52,7 +52,7 @@ function EditProjectsBox() {
   const [existingProjects, setExistingProjects] = useState<existingProjectsType[]>([]);
 
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [isEdit, setIsEdit] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -116,7 +116,6 @@ function EditProjectsBox() {
   const handleEditClick = (e: existingProjectsType) => {
     setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active });
     setTechStack(e.tech);
-    setIsEdit(e._id);
   };
 
   const handleSubmit = async () => {
@@ -164,40 +163,9 @@ function EditProjectsBox() {
       }
     });
   };
-  const handleEdit = async () => {
-    try {
-      let techTempStack: any[] = [];
-      techStack.map((item) => {
-        if (item.image.length) {
-          techTempStack.push({
-            tech_name: item.tech_name,
-            image: item.image,
-          });
-        }
-      });
-      let body = {
-        ...values,
-        user_id: session?.user.id,
-        tech: techTempStack,
-      };
-      const res = await axios.put(`/api/project/${isEdit}`, body);
-
-      if (res?.status == 200) {
-        Swal.fire({
-          icon: "success",
-          title: res?.data?.message,
-        });
-      }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
-  };
 
   const FetchProductList = async () => {
+    setLoading(true)
     try {
       const res = await axios.get("/api/project");
       if (res.status == 200) {
@@ -206,6 +174,7 @@ function EditProjectsBox() {
     } catch (err: any) {
       console.log(err.message);
     }
+    setLoading(false)
   };
 
   useEffect(() => {
@@ -286,7 +255,7 @@ function EditProjectsBox() {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingProjects={existingProjects} handleEditClick={handleEditClick} />
+          <RightBox existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} />
         </div>
       </div>
     </div>

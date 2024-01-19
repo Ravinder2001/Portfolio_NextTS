@@ -4,6 +4,7 @@ import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Loader from "../Loader/Loader";
 
 type contactType = {
   name: string;
@@ -21,6 +22,7 @@ function EditContactUs() {
   const { data: session } = useSession();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [intialAPI, setInitialAPI] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [github, setGithub] = useState<contactType>({
     name: "",
     link: "",
@@ -131,6 +133,7 @@ function EditContactUs() {
   };
 
   const FetchExistingContactList = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/api/contact");
       if (res?.data?.data.length == 0) {
@@ -148,6 +151,7 @@ function EditContactUs() {
           }
         });
       }
+      setLoading(false);
     } catch (err: any) {
       console.log(err.message);
     }
@@ -163,30 +167,36 @@ function EditContactUs() {
           <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
         </div>
       </div>
-      <div className={styles.box}>
-        <div className={styles.title}>{options.github}</div>
-        <div className={styles.sub}>
-          <input type="text" name={github.name} value={github.link} onChange={handleChange} className={styles.input} />
-          <DefaultToogle value={github.active} handleChange={handleToogle} name={github.name} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <div className={styles.box}>
+            <div className={styles.title}>{options.github}</div>
+            <div className={styles.sub}>
+              <input type="text" name={github.name} value={github.link} onChange={handleChange} className={styles.input} />
+              <DefaultToogle value={github.active} handleChange={handleToogle} name={github.name} />
+            </div>
+          </div>
+          <div className={styles.box}>
+            <div className={styles.title}>{options.linkedin}</div>
+            <div className={styles.sub}>
+              <input type="text" name={linkedin.name} value={linkedin.link} onChange={handleChange} className={styles.input} />
+              <DefaultToogle value={linkedin.active} handleChange={handleToogle} name={linkedin.name} />
+            </div>
+          </div>
+          <div className={styles.box}>
+            <div className={styles.title}>{options.whatsapp}</div>
+            <div className={styles.sub}>
+              <input type="text" name={whatsapp.name} value={whatsapp.link} onChange={handleChange} className={styles.input} />
+              <DefaultToogle value={whatsapp.active} handleChange={handleToogle} name={whatsapp.name} />
+            </div>
+          </div>
+          <div className={styles.btn} onClick={handleUpdate}>
+            Update
+          </div>
         </div>
-      </div>
-      <div className={styles.box}>
-        <div className={styles.title}>{options.linkedin}</div>
-        <div className={styles.sub}>
-          <input type="text" name={linkedin.name} value={linkedin.link} onChange={handleChange} className={styles.input} />
-          <DefaultToogle value={linkedin.active} handleChange={handleToogle} name={linkedin.name} />
-        </div>
-      </div>
-      <div className={styles.box}>
-        <div className={styles.title}>{options.whatsapp}</div>
-        <div className={styles.sub}>
-          <input type="text" name={whatsapp.name} value={whatsapp.link} onChange={handleChange} className={styles.input} />
-          <DefaultToogle value={whatsapp.active} handleChange={handleToogle} name={whatsapp.name} />
-        </div>
-      </div>
-      <div className={styles.btn} onClick={handleUpdate}>
-        Update
-      </div>
+      )}
     </div>
   );
 }

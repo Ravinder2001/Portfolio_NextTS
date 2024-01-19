@@ -34,6 +34,7 @@ function EditReviewsBox() {
   });
   const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const ToogleVisible = () => {
     setIsVisible(!isVisible);
@@ -90,6 +91,7 @@ function EditReviewsBox() {
   };
 
   const FetchExistingReviews = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("/api/review");
       if (res?.data?.data) {
@@ -98,6 +100,7 @@ function EditReviewsBox() {
     } catch (err: any) {
       console.log(err.message);
     }
+    setLoading(false);
   };
   useEffect(() => {
     FetchExistingReviews();
@@ -153,7 +156,7 @@ function EditReviewsBox() {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingReviews} handleEditClick={handleEditClick} />
+          <RightBox existingData={existingReviews} handleEditClick={handleEditClick} loading={loading} />
         </div>
       </div>
     </div>

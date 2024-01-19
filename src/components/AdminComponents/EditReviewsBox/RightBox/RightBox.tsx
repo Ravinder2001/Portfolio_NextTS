@@ -5,6 +5,7 @@ import Images from "@/icons/Images";
 import LucideIcons from "@/icons/LucideIcons";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Loader from "../../Loader/Loader";
 
 type existingDataType = {
   existingData: {
@@ -15,6 +16,7 @@ type existingDataType = {
     active: boolean;
   }[];
   handleEditClick: (e: { name: string; des: string; star: number; _id: string; active: boolean }) => void;
+  loading: boolean;
 };
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
@@ -49,27 +51,31 @@ function RightBox(props: existingDataType) {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.heading}>Existing Companines</div>
-      <div>
-        {props.existingData.map((item) => (
-          <div className={styles.box} key={item._id}>
-            <div className={styles.right}>
-              <div>
-                <div className={styles.title}>{item.name}</div>
-                <div className={styles.role}>{item.star}</div>
-              </div>
-              <div className={styles.footer}>
-                <div className={styles.icon} onClick={() => props.handleEditClick(item)}>
-                  <LucideIcons name="edit" color="green" size={20} />
+      <div className={styles.heading}>Existing Reviews</div>
+      {props.loading ? (
+        <Loader />
+      ) : (
+        <div>
+          {props.existingData.map((item) => (
+            <div className={styles.box} key={item._id}>
+              <div className={styles.right}>
+                <div>
+                  <div className={styles.title}>{item.name}</div>
+                  <div className={styles.role}>{item.star}</div>
                 </div>
-                <div className={styles.icon} onClick={() => handleDelete(item._id)}>
-                  <LucideIcons name="delete" color="red" size={20} />
+                <div className={styles.footer}>
+                  <div className={styles.icon} onClick={() => props.handleEditClick(item)}>
+                    <LucideIcons name="edit" color="green" size={20} />
+                  </div>
+                  <div className={styles.icon} onClick={() => handleDelete(item._id)}>
+                    <LucideIcons name="delete" color="red" size={20} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
