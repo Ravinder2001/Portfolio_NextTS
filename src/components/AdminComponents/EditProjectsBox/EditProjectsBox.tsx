@@ -39,7 +39,18 @@ type techStackType = {
   image: string;
   _id: string;
 };
-function EditProjectsBox() {
+
+type props = {
+  data:
+    | {
+        _id?: string;
+        name: string;
+        active: boolean;
+      }
+    | undefined;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+};
+function EditProjectsBox(props: props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     name: "",
@@ -50,13 +61,7 @@ function EditProjectsBox() {
   });
   const [techStack, setTechStack] = useState<techStackType[]>([]);
   const [existingProjects, setExistingProjects] = useState<existingProjectsType[]>([]);
-
-  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const ToogleVisible = () => {
-    setIsVisible(!isVisible);
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -164,8 +169,50 @@ function EditProjectsBox() {
     });
   };
 
+  const handleToogle = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.patch(`/api/project/${id}`, {
+            active: !e.target.checked,
+          });
+
+          if (res?.status == 200) {
+            setExistingProjects((prev) => {
+              return prev.map((item) => {
+                if (item._id == id) {
+                  return { ...item, active: !e.target.checked };
+                } else {
+                  return item;
+                }
+              });
+            });
+            Swal.fire({
+              icon: "success",
+              title: res?.data?.message,
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
+
   const FetchProductList = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await axios.get("/api/project");
       if (res.status == 200) {
@@ -174,7 +221,7 @@ function EditProjectsBox() {
     } catch (err: any) {
       console.log(err.message);
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -185,7 +232,7 @@ function EditProjectsBox() {
       <div className={styles.navbar}>
         <div className={styles.heading}>Projects</div>
         <div>
-          <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
+          <DefaultToogle value={props.data?.active ?? true} handleChange={(e) => props.handleToogle(e, props.data?._id ?? "")} name="" />
         </div>
       </div>
       <div className={styles.main}>
@@ -255,7 +302,7 @@ function EditProjectsBox() {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} />
+          <RightBox existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
         </div>
       </div>
     </div>

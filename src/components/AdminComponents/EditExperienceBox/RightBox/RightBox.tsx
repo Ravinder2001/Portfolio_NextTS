@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
 import Images from "@/icons/Images";
@@ -6,6 +6,7 @@ import LucideIcons from "@/icons/LucideIcons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Loader from "../../Loader/Loader";
+import DefaultToogle from "../../ToogleBtn/ToogleBtn";
 
 type existingDataType = {
   existingData: {
@@ -19,6 +20,7 @@ type existingDataType = {
   }[];
   handleEditClick: (e: { company: string; role: string; des: string; duration: string; image: string; _id?: string; active: boolean }) => void;
   loading: boolean;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
@@ -73,6 +75,15 @@ function RightBox(props: existingDataType) {
                   <div className={styles.icon} onClick={() => props.handleEditClick(item)}>
                     <LucideIcons name="edit" color="green" size={20} />
                   </div>
+
+                  <DefaultToogle
+                    value={item.active}
+                    handleChange={(e) => {
+                      props.handleToogle(e, item._id);
+                    }}
+                    name=""
+                  />
+
                   <div className={styles.icon} onClick={() => handleDelete(item._id)}>
                     <LucideIcons name="delete" color="red" size={20} />
                   </div>

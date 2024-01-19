@@ -18,10 +18,19 @@ let options = {
   linkedin: "Linkedin",
   whatsapp: "WhatsApp",
 };
-function EditContactUs() {
+type props = {
+  data:
+    | {
+        _id?: string;
+        name: string;
+        active: boolean;
+      }
+    | undefined;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+};
+function EditContactUs(props:props) {
   const { data: session } = useSession();
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [intialAPI, setInitialAPI] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [github, setGithub] = useState<contactType>({
     name: "",
@@ -91,7 +100,6 @@ function EditContactUs() {
         },
       ];
       await axios.post(`/api/contact`, body);
-      setInitialAPI(true);
     } catch (error: any) {
       Swal.fire({
         icon: "error",
@@ -137,7 +145,7 @@ function EditContactUs() {
     try {
       const res = await axios.get("/api/contact");
       if (res?.data?.data.length == 0) {
-        if (!intialAPI) handleCreate();
+        handleCreate();
       } else if (res?.data?.data.length) {
         res?.data?.data.map((item: contactType) => {
           if (item.name == options.github) {
@@ -164,7 +172,7 @@ function EditContactUs() {
       <div className={styles.navbar}>
         <div className={styles.heading}>Contact Us</div>
         <div>
-          <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
+          <DefaultToogle value={props.data?.active ?? true} handleChange={(e) => props.handleToogle(e, props.data?._id ?? "")} name="" />
         </div>
       </div>
       {loading ? (

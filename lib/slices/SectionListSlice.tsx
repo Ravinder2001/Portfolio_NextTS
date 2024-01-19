@@ -1,40 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface CounterState {
-  list: { title: string; id: number; isSelected: boolean }[];
+export interface SectionState {
+  list: { name: string; active: boolean; _id?: string }[];
   selected: number;
 }
 
-const initialState: CounterState = {
+const initialState: SectionState = {
   list: [
-    { title: "Hero", id: 1, isSelected: false },
-    { title: "Experience", id: 2, isSelected: false },
-    { title: "Projects", id: 3, isSelected: false },
-    { title: "Skills", id: 4, isSelected: false },
-    { title: "Reviews", id: 5, isSelected: false },
-    { title: "About", id: 6, isSelected: false },
-    { title: "Contact Us", id: 7, isSelected: false },
+    { name: "Hero", active: true },
+    { name: "Experience", active: true },
+    { name: "Projects", active: true },
+    { name: "Skills", active: true },
+    { name: "Reviews", active: true },
+    { name: "About", active: true },
+    { name: "Contact Us", active: true },
   ],
-  selected: 2,
+  selected: 1,
 };
 
-export const counterSlice = createSlice({
+export const sectionSlice = createSlice({
   name: "section",
   initialState,
   reducers: {
+    addSectionList: (state, action) => {
+      state.list = action.payload;
+    },
     toogleIsSelected: (state, action) => {
+      state.list.map((item, index) => {
+        if (index == action.payload) {
+          state.selected = action.payload;
+        }
+      });
+    },
+    toogleSection: (state, action) => {
       state.list.map((item) => {
-        if (item.id == action.payload) {
-          item.isSelected = !item.isSelected;
-          state.selected = item.id;
-        } else {
-          item.isSelected = false;
+        if (item._id == action.payload.id) {
+          item.active = action.payload.active;
         }
       });
     },
   },
 });
 
-export const { toogleIsSelected } = counterSlice.actions;
+export const { addSectionList, toogleIsSelected,toogleSection } = sectionSlice.actions;
 
-export default counterSlice.reducer;
+export default sectionSlice.reducer;

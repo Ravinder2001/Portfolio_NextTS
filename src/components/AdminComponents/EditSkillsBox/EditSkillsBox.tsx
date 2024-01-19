@@ -16,15 +16,21 @@ type SkillType = {
   image: string;
   active: boolean;
 };
-function EditSkillsBox() {
+
+type props = {
+  data:
+    | {
+        _id?: string;
+        name: string;
+        active: boolean;
+      }
+    | undefined;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+};
+function EditSkillsBox(props: props) {
   const { data: session } = useSession();
-  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [skills, setSkills] = useState<SkillType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const ToogleVisible = () => {
-    setIsVisible(!isVisible);
-  };
 
   const addNewTech = () => {
     setSkills((prev) => [
@@ -147,7 +153,7 @@ function EditSkillsBox() {
       <div className={styles.navbar}>
         <div className={styles.heading}>Skills</div>
         <div>
-          <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
+          <DefaultToogle value={props.data?.active ?? true} handleChange={(e) => props.handleToogle(e, props.data?._id ?? "")} name="" />
         </div>
       </div>
       {loading ? (

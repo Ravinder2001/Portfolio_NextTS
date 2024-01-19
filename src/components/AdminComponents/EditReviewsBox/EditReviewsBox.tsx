@@ -23,8 +23,17 @@ type existingReviews = {
   _id: string;
   active: boolean;
 };
-
-function EditReviewsBox() {
+type props = {
+  data:
+    | {
+        _id?: string;
+        name: string;
+        active: boolean;
+      }
+    | undefined;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+};
+function EditReviewsBox(props:props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     name: "",
@@ -33,12 +42,8 @@ function EditReviewsBox() {
     active: true,
   });
   const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  const ToogleVisible = () => {
-    setIsVisible(!isVisible);
-  };
+  const [loading, setLoading] = useState<boolean>(true);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -110,7 +115,7 @@ function EditReviewsBox() {
       <div className={styles.navbar}>
         <div className={styles.heading}>Reviews</div>
         <div>
-          <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
+          <DefaultToogle value={props.data?.active ?? true} handleChange={(e) => props.handleToogle(e, props.data?._id ?? "")} name="" />
         </div>
       </div>
       <div className={styles.main}>

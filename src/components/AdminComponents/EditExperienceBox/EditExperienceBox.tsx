@@ -29,7 +29,18 @@ type existingDataType = {
   role: string;
   active: boolean;
 };
-function EditExperienceBox() {
+
+type props = {
+  data:
+    | {
+        _id?: string;
+        name: string;
+        active: boolean;
+      }
+    | undefined;
+  handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+};
+function EditExperienceBox(props:props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     company: "",
@@ -40,13 +51,8 @@ function EditExperienceBox() {
     active: true,
   });
 
-  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [existingData, setExistingData] = useState<existingDataType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true)
-
-  const ToogleVisible = () => {
-    setIsVisible(!isVisible);
-  };
+  const [loading, setLoading] = useState<boolean>(true);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -64,6 +70,47 @@ function EditExperienceBox() {
     if (e?._id) {
       setValues(e);
     }
+  };
+  const handleToogle = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.patch(`/api/experience/${id}`, {
+            active: !e.target.checked,
+          });
+
+          if (res?.status == 200) {
+            setExistingData((prev) => {
+              return prev.map((item) => {
+                if (item._id == id) {
+                  return { ...item, active: !e.target.checked };
+                } else {
+                  return item;
+                }
+              });
+            });
+            Swal.fire({
+              icon: "success",
+              title: res?.data?.message,
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
 
   const handleSubmit = async () => {
@@ -100,7 +147,7 @@ function EditExperienceBox() {
   };
 
   const FetchExistingExpDetails = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await axios.get(`/api/experience`);
       setExistingData(res?.data?.data);
@@ -111,7 +158,7 @@ function EditExperienceBox() {
         text: "Something went wrong!",
       });
     }
-    setLoading(false)
+    setLoading(false);
   };
   useEffect(() => {
     FetchExistingExpDetails();
@@ -121,7 +168,7 @@ function EditExperienceBox() {
       <div className={styles.navbar}>
         <div className={styles.heading}>Experience</div>
         <div>
-          <DefaultToogle value={isVisible} handleChange={ToogleVisible} name="" />
+          <DefaultToogle value={props.data?.active ?? true} handleChange={(e) => props.handleToogle(e, props.data?._id ?? "")} name="" />
         </div>
       </div>
       <div className={styles.main}>
@@ -180,7 +227,7 @@ function EditExperienceBox() {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} />
+          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
         </div>
       </div>
     </div>

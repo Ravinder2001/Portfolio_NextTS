@@ -32,7 +32,7 @@ export const GET = async () => {
     }
 
     await connectToDB();
-    const data = await Experience.find({ relaiton_id: userSession?.user.name }, { _id: 1, company: 1, role: 1, des: 1, duration: 1, image: 1 });
+    const data = await Experience.find({ relaiton_id: userSession?.user.name }, { _id: 1, company: 1, role: 1, des: 1, duration: 1, image: 1,active:1 });
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (err: any) {
     return new Response(err.message, { status: 400 });
