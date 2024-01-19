@@ -120,36 +120,49 @@ function EditProjectsBox() {
   };
 
   const handleSubmit = async () => {
-    try {
-      let techTempStack: any[] = [];
-      techStack.map((item) => {
-        if (item.image.length) {
-          techTempStack.push({
-            tech_name: item.tech_name,
-            image: item.image,
-          });
-        }
-      });
-      let body = {
-        ...values,
-        tech: techTempStack,
-        relation_id: session?.user.name,
-      };
-      const res = await axios.post("/api/project", body);
-
-      if (res?.status == 200) {
-        Swal.fire({
-          icon: "success",
-          title: res?.data?.message,
+    let techTempStack: any[] = [];
+    techStack.map((item) => {
+      if (item.image.length) {
+        techTempStack.push({
+          tech_name: item.tech_name,
+          image: item.image,
         });
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
+    });
+    let body = {
+      ...values,
+      tech: techTempStack,
+      relation_id: session?.user.name,
+    };
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then(async (result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.post("/api/project", body);
+
+          if (res?.status == 200) {
+            Swal.fire({
+              icon: "success",
+              title: res?.data?.message,
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
   };
   const handleEdit = async () => {
     try {

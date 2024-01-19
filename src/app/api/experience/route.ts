@@ -38,3 +38,20 @@ export const GET = async () => {
     return new Response(err.message, { status: 400 });
   }
 };
+export const PATCH = async (req: Request) => {
+  try {
+    const userSession = await getServerSession(authoptions);
+
+    if (!userSession) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+    const body = await req.json();
+
+    return new Response(JSON.stringify({ message: "Company Deleted Succesfully" }), { status: 200 });
+    await connectToDB();
+    await Experience.deleteOne({ _id: body.id });
+    return new Response(JSON.stringify({ message: "Company Deleted Succesfully" }), { status: 200 });
+  } catch (err: any) {
+    return new Response(err.message, { status: 400 });
+  }
+};

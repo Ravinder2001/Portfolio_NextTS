@@ -15,7 +15,7 @@ const initialState: CounterState = {
     { title: "About", id: 6, isSelected: false },
     { title: "Contact Us", id: 7, isSelected: false },
   ],
-  selected: 1,
+  selected: 6,
 };
 
 export const counterSlice = createSlice({

@@ -38,23 +38,35 @@ function EditHeroBox() {
   };
 
   const handleSubmit = async () => {
-    try {
-      let body = { ...values, image: "sss", relation_id: session?.user.name};
-      const res = await axios.post("/api/hero", body);
+    let body = { ...values, image: "sss", relation_id: session?.user.name };
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.post("/api/hero", body);
 
-      if (res?.status == 200) {
-        Swal.fire({
-          icon: "success",
-          title: res?.data?.message,
-        });
+          if (res?.status == 200) {
+            Swal.fire({
+              icon: "success",
+              title: res?.data?.message,
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
       }
-    } catch (error: any) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
+    });
   };
 
   const FetchHeroDetails = async () => {

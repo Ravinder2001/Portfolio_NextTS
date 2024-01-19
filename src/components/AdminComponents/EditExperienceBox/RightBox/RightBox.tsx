@@ -3,6 +3,8 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import Images from "@/icons/Images";
 import LucideIcons from "@/icons/LucideIcons";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 type existingDataType = {
   existingData: {
@@ -17,7 +19,38 @@ type existingDataType = {
   handleEditClick: (e: { company: string; role: string; des: string; duration: string; image: string; _id?: string; active: boolean }) => void;
 };
 function RightBox(props: existingDataType) {
-  console.log("props",props)
+  const handleDelete = (id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to remove this Company?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axios.patch("/api/experience", { id });
+
+          if (res?.status == 200) {
+            Swal.fire({
+              title: "Deleted!",
+              text: res?.data.message,
+              icon: "success",
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
+      }
+    });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Existing Companines</div>
@@ -35,7 +68,7 @@ function RightBox(props: existingDataType) {
                 <div className={styles.icon} onClick={() => props.handleEditClick(item)}>
                   <LucideIcons name="edit" color="green" size={20} />
                 </div>
-                <div className={styles.icon}>
+                <div className={styles.icon} onClick={() => handleDelete(item._id)}>
                   <LucideIcons name="delete" color="red" size={20} />
                 </div>
               </div>
