@@ -1,35 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
-import Images from "@/icons/Images";
-import { getImageName } from "@/utils/Function";
+
 type props = {
   projectData: {
     id: string;
     name: string;
     type: string;
-    about: string;
-    tech: string[];
+    des: string;
+    image: string;
+    tech: { tech_name: string; _id: string; image: string }[];
   };
   index: number;
 };
 function ProjectContainer(props: props) {
-  
-
   return (
-    <div className={props.index % 2 == 0 ? styles.container : styles.container_rev}>
+    <div className={props.index % 2 == 0 ? styles.container : styles.container_rev} data-aos={props.index % 2 == 0 ? "fade-right" : "fade-left"}>
       <div className={styles.leftBox}>
-        <Image src={Images("Water")} alt="" className={styles.img} />
+        <Image src={props.projectData.image} alt="" className={styles.img} width={100} height={100} />
       </div>
       <div className={styles.rightBox}>
         <div className={styles.name}>{props.projectData.name}</div>
         <div className={styles.type}>{props.projectData.type}</div>
-        <div className={styles.about}>{props.projectData.about}</div>
+        <div className={styles.about}>{props.projectData.des}</div>
         <div className={styles.stackbox}>
           {props.projectData.tech.map((tech, index) => (
             <div className={styles.stack} key={index}>
-              <Image src={Images(getImageName(tech))} alt="" className={styles.icon} />
-              <div className={styles.stackName}>{tech}</div>
+              <Image src={tech.image} alt="" className={styles.icon} width={100} height={100} />
+              <div className={styles.stackName}>{tech.tech_name}</div>
             </div>
           ))}
         </div>

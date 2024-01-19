@@ -21,6 +21,7 @@ type existingDataType = {
   handleEditClick: (e: { company: string; role: string; des: string; duration: string; image: string; _id?: string; active: boolean }) => void;
   loading: boolean;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+  FetchExistingExpDetails: () => void;
 };
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
@@ -38,6 +39,7 @@ function RightBox(props: existingDataType) {
           const res = await axios.patch("/api/experience", { id });
 
           if (res?.status == 200) {
+            props.FetchExistingExpDetails();
             Swal.fire({
               title: "Deleted!",
               text: res?.data.message,

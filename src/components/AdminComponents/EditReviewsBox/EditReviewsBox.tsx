@@ -77,6 +77,7 @@ function EditReviewsBox(props:props) {
           const res = await axios.post("/api/review", body);
 
           if (res?.status == 200) {
+            FetchExistingReviews()
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -161,7 +162,7 @@ function EditReviewsBox(props:props) {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingReviews} handleEditClick={handleEditClick} loading={loading} />
+          <RightBox FetchExistingReviews={FetchExistingReviews} existingData={existingReviews} handleEditClick={handleEditClick} loading={loading} />
         </div>
       </div>
     </div>

@@ -48,8 +48,6 @@ export const PATCH = async (req: Request) => {
       return new Response("Unauthorized", { status: 401 });
     }
     const body = await req.json();
-
-    return new Response(JSON.stringify({ message: "Review Deleted Succesfully" }), { status: 200 });
     await connectToDB();
     await Review.deleteOne({ _id: body.id });
     return new Response(JSON.stringify({ message: "Review Deleted Succesfully" }), { status: 200 });

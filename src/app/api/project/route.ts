@@ -47,9 +47,7 @@ export const PATCH = async (req: Request) => {
     if (!userSession) {
       return new Response("Unauthorized", { status: 401 });
     }
-    const body = await req.json();
-
-    return new Response(JSON.stringify({ message: "Project Deleted Succesfully" }), { status: 200 });
+    const body = await req.json()
     await connectToDB();
     await Project.deleteOne({ _id: body.id });
     return new Response(JSON.stringify({ message: "Company Deleted Succesfully" }), { status: 200 });

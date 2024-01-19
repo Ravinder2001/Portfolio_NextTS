@@ -3,16 +3,33 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import Images from "@/icons/Images";
 import { getImageName } from "@/utils/Function";
-function SkillsBox() {
-  let skills = ["React", "TypeScript", "JavaScript", "NodeJS", "Postgres", "MongoDB", "AWS", "Socket.io", "SASS"];
+import { ENVConfig } from "@/utils/Config";
+import axios from "axios";
+
+type DataType = {
+  _id: string;
+  name: string;
+  image: string;
+};
+
+const GetData = async () => {
+  const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/skill`);
+  if (res?.data?.data) {
+    return res?.data?.data;
+  } else {
+    throw new Error("Something went wrong");
+  }
+};
+async function SkillsBox() {
+  const data: DataType[] = await GetData();
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Skills</div>
       <div className={styles.skillBox}>
-        {skills.map((skill, index) => (
-          <div key={index} className={styles.box}>
-            <Image className={styles.img} src={Images(getImageName(skill))} alt="" />
-            <div className={styles.name}>{skill}</div>
+        {data.map((skill, index) => (
+          <div key={index} className={styles.box}data-aos="flip-up">
+            <Image className={styles.img} src={skill.image} alt="" width={100} height={100} />
+            <div className={styles.name}>{skill.name}</div>
           </div>
         ))}
       </div>

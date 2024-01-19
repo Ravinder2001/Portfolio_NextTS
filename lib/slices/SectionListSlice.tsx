@@ -27,7 +27,7 @@ export const sectionSlice = createSlice({
     },
     toogleIsSelected: (state, action) => {
       state.list.map((item, index) => {
-        if (index == action.payload) {
+        if (index + 1 == action.payload) {
           state.selected = action.payload;
         }
       });
@@ -42,6 +42,6 @@ export const sectionSlice = createSlice({
   },
 });
 
-export const { addSectionList, toogleIsSelected,toogleSection } = sectionSlice.actions;
+export const { addSectionList, toogleIsSelected, toogleSection } = sectionSlice.actions;
 
 export default sectionSlice.reducer;

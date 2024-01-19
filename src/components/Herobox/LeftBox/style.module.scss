@@ -30,7 +30,7 @@
   font-size: 36px;
   height: 58px;
   overflow: hidden;
-  
+  color: rgb(155, 151, 151);
 }
 
 .flip > div > div {
@@ -53,7 +53,6 @@
 }
 .flip div:last-child div {
   background: #dc143c;
-
 }
 
 @keyframes show {

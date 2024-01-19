@@ -17,6 +17,7 @@ type existingDataType = {
   }[];
   handleEditClick: (e: { name: string; des: string; star: number; _id: string; active: boolean }) => void;
   loading: boolean;
+  FetchExistingReviews:()=>void
 };
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
@@ -33,6 +34,7 @@ function RightBox(props: existingDataType) {
         try {
           const res = await axios.patch("/api/review", { id });
           if (res?.status == 200) {
+            props.FetchExistingReviews()
             Swal.fire({
               title: "Deleted!",
               text: res?.data.message,

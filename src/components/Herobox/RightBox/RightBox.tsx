@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
-import Images from "@/icons/Images";
-function RightBox() {
+function RightBox({ image }: { image: string }) {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-aos="flip-left" data-aos-duration="500">
       <div className={styles.box}></div>
-      <Image src={Images("Profile")} alt="" className={styles.img} />
+      <Image src={image} alt="" className={styles.img} width={100} height={100} />
     </div>
   );
 }

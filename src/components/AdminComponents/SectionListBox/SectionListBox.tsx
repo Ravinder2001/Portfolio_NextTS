@@ -9,6 +9,7 @@ type props = {
   id: number;
 };
 function SectionListBox(props: props) {
+  console.log("🚀  props:", props)
   const disptach = useDispatch();
   const handleClick = () => {
     disptach(toogleIsSelected(props.id));

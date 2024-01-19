@@ -157,6 +157,7 @@ function EditProjectsBox(props: props) {
             });
           }
         } catch (error: any) {
+          FetchProductList()
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -302,7 +303,7 @@ function EditProjectsBox(props: props) {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
+          <RightBox FetchProductList={FetchProductList} existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
         </div>
       </div>
     </div>

@@ -46,3 +46,4 @@ export const GET = async (request: Request) => {
     return new Response(err.message, { status: 400 });
   }
 };
+

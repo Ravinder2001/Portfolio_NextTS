@@ -38,6 +38,7 @@ type existingDataType = {
   }) => void;
   loading: boolean;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
+  FetchProductList: () => void;
 };
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
@@ -55,6 +56,7 @@ function RightBox(props: existingDataType) {
           const res = await axios.patch("/api/project", { id });
 
           if (res?.status == 200) {
+            props.FetchProductList();
             Swal.fire({
               title: "Deleted!",
               text: res?.data.message,

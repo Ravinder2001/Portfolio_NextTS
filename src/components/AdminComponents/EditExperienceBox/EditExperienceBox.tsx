@@ -128,6 +128,7 @@ function EditExperienceBox(props:props) {
           const res = await axios.post("/api/experience", body);
 
           if (res?.status == 200) {
+            FetchExistingExpDetails()
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -227,7 +228,7 @@ function EditExperienceBox(props:props) {
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
+          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} FetchExistingExpDetails={FetchExistingExpDetails} />
         </div>
       </div>
     </div>

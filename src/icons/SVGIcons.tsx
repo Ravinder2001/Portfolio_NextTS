@@ -45,7 +45,7 @@ const SVGIcons = (props: props) => {
   switch (props.name) {
     case "Linkedin":
       return Linkedin;
-    case "Whatsapp":
+    case "WhatsApp":
       return Whatsapp;
     case "Github":
       return Github;
