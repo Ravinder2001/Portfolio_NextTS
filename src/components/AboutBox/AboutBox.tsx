@@ -13,27 +13,21 @@ type dataType = {
 
 const GetData = async () => {
   const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/about`);
-  if (res?.data?.data) {
-    return res?.data?.data;
-  } else {
-    throw new Error("Something went wrong");
-  }
+  return res?.data?.data;
 };
 async function AboutBox() {
   const data: dataType = await GetData();
-  return (
-    <div className={styles.container} >
-      <div className={styles.box} data-aos="zoom-in">
-        <div className={styles.left}>
-          <Image src={data.image} width={100} height={100} alt="" className={styles.img} />
-        </div>
-        <div className={styles.right}>
-          <div className={styles.main}>{data.title}</div>
-          <div className={styles.sub}>{data.des}</div>
-        </div>
-      </div>
+  return data? <div className={styles.container}>
+  <div className={styles.box} data-aos="zoom-in">
+    <div className={styles.left}>
+      <Image src={data.image} width={100} height={100} alt="" className={styles.img} />
     </div>
-  );
+    <div className={styles.right}>
+      <div className={styles.main}>{data.title}</div>
+      <div className={styles.sub}>{data.des}</div>
+    </div>
+  </div>
+</div>:<div>No Data Avaible!</div>
 }
 
 export default AboutBox;
