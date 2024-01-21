@@ -7,27 +7,30 @@ import { ENVConfig } from "@/utils/Config";
 import axios from "axios";
 
 type DataType = {
-  _id: string;
-  name: string;
-  image: string;
+  data: {
+    _id: string;
+    name: string;
+    image: string;
+  }[];
 };
 
 const GetData = async () => {
-  const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/skill`);
-  if (res?.data?.data) {
-    return res?.data?.data;
-  } else {
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/skill`);
+
+  if (!res.ok) {
     throw new Error("Something went wrong");
   }
+
+  return res.json();
 };
 async function SkillsBox() {
-  const data: DataType[] = await GetData();
+  const { data }: DataType = await GetData();
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Skills</div>
       <div className={styles.skillBox}>
         {data.map((skill, index) => (
-          <div key={index} className={styles.box}data-aos="flip-up">
+          <div key={index} className={styles.box} data-aos="flip-up">
             <Image className={styles.img} src={skill.image} alt="" width={100} height={100} />
             <div className={styles.name}>{skill.name}</div>
           </div>

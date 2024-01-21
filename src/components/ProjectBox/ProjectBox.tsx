@@ -5,23 +5,26 @@ import axios from "axios";
 import { ENVConfig } from "@/utils/Config";
 
 type DataType = {
-  id: string;
-  name: string;
-  type: string;
-  des: string;
-  image: string;
-  tech: { tech_name: string; _id: string; image: string }[];
-}[];
+  data: {
+    id: string;
+    name: string;
+    type: string;
+    des: string;
+    image: string;
+    tech: { tech_name: string; _id: string; image: string }[];
+  }[];
+};
 const GetData = async () => {
-  const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/project`);
-  if (res?.data?.data) {
-    return res?.data?.data;
-  } else {
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/project`);
+
+  if (!res.ok) {
     throw new Error("Something went wrong");
   }
+
+  return res.json();
 };
 async function ProjectBox() {
-  const data: DataType = await GetData();
+  const { data }: DataType = await GetData();
 
   return (
     <div className={styles.container}>

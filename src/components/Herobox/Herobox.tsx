@@ -6,11 +6,16 @@ import axios from "axios";
 import { ENVConfig } from "@/utils/Config";
 
 const GetData = async () => {
-  const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/hero`);
-  return res?.data?.data;
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`);
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return res.json();
 };
 async function Herobox() {
-  const data = await GetData();
+  const { data } = await GetData();
   return data ? (
     <div className={styles.container}>
       <LeftBox data={data} />

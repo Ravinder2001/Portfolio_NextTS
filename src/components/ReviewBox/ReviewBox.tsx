@@ -5,22 +5,25 @@ import ReviewComponent from "./ReviewComponent/ReviewComponent";
 import { ENVConfig } from "@/utils/Config";
 import axios from "axios";
 type dataType = {
-  _id: string;
-  name: string;
-  star: number;
-  des: string;
+  data: {
+    _id: string;
+    name: string;
+    star: number;
+    des: string;
+  }[];
 };
 
 const GetData = async () => {
-  const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/review`);
-  if (res?.data?.data) {
-    return res?.data?.data;
-  } else {
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/review`);
+
+  if (!res.ok) {
     throw new Error("Something went wrong");
   }
+
+  return res.json();
 };
 async function ReviewBox() {
-  const data: dataType[] = await GetData();
+  const { data }: dataType = await GetData();
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Reviews</div>
