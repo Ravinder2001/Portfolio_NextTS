@@ -9,9 +9,12 @@ import ProjectBox from "@/components/ProjectBox/ProjectBox";
 import ReviewBox from "@/components/ReviewBox/ReviewBox";
 import AboutBox from "@/components/AboutBox/AboutBox";
 import ContactBox from "@/components/ContactBox/ContactBox";
-
+import { ENVConfig } from "@/utils/Config";
 
 function page() {
+  if (!ENVConfig.baseURL) {
+    return null;
+  }
   return (
     <div className={styles.container}>
       <Navbar />
