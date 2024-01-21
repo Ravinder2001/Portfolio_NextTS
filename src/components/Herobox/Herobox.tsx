@@ -7,9 +7,10 @@ import { ENVConfig } from "@/utils/Config";
 
 const GetData = async () => {
   const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`);
-
+  console.log("ENVConfig.baseURL", ENVConfig.baseURL);
+  console.log("🚀  res:", res);
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error("Failed to fetch data");
   }
 
   return res.json();
