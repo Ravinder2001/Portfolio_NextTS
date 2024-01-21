@@ -27,12 +27,16 @@ async function ReviewBox() {
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Reviews</div>
+      {data ? (
+        <Marquee direction="left" style={{ marginTop: "50px" }}>
+          {data.map((review) => (
+            <ReviewComponent data={review} key={review._id} />
+          ))}
+        </Marquee>
+      ) : (
+        <div>No Data</div>
+      )}
 
-      <Marquee direction="left" style={{ marginTop: "50px" }}>
-        {data.map((review) => (
-          <ReviewComponent data={review} key={review._id} />
-        ))}
-      </Marquee>
       {/* <Marquee direction="right" style={{ marginTop: "20px" }}>
         <ReviewComponent />
         <ReviewComponent />

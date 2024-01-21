@@ -28,14 +28,18 @@ async function SkillsBox() {
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Skills</div>
-      <div className={styles.skillBox}>
-        {data.map((skill, index) => (
-          <div key={index} className={styles.box} data-aos="flip-up">
-            <Image className={styles.img} src={skill.image} alt="" width={100} height={100} />
-            <div className={styles.name}>{skill.name}</div>
-          </div>
-        ))}
-      </div>
+      {data ? (
+        <div className={styles.skillBox}>
+          {data.map((skill, index) => (
+            <div key={index} className={styles.box} data-aos="flip-up">
+              <Image className={styles.img} src={skill.image} alt="" width={100} height={100} />
+              <div className={styles.name}>{skill.name}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>No Data Avaiblw</div>
+      )}
     </div>
   );
 }

@@ -26,13 +26,15 @@ const GetData = async () => {
 async function ProjectBox() {
   const { data }: DataType = await GetData();
 
-  return (
+  return data ? (
     <div className={styles.container}>
       <div className={styles.heading}>My Amazing Works</div>
       {data.map((project, index) => (
         <ProjectContainer projectData={project} key={project.id} index={index} />
       ))}
     </div>
+  ) : (
+    <div>No data Avaivle</div>
   );
 }
 

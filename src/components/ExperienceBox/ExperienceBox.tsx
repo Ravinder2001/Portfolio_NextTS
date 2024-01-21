@@ -15,14 +15,16 @@ const GetData = async () => {
   return res.json();
 };
 async function ExperienceBox() {
-  const {data} = await GetData();
-  return (
+  const { data } = await GetData();
+  return data ? (
     <div className={styles.container}>
       <div className={styles.box}>
         <div className={styles.heading}>Experience</div>
         <BranchBox expData={data} />
       </div>
     </div>
+  ) : (
+    <div>NO Data Avaible</div>
   );
 }
 
