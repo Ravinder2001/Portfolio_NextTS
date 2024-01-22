@@ -9,7 +9,7 @@ const GetData = async () => {
   const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/experience`);
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    console.log('Failed to fetch Experience data')
   }
 
   return res.json();

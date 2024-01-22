@@ -18,7 +18,7 @@ const GetData = async () => {
   const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/project`);
 
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    console.log('Failed to fetch project data')
   }
 
   return res.json();

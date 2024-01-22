@@ -8,12 +8,12 @@ import { ENVConfig } from "@/utils/Config";
 const GetData = async () => {
   const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`);
   console.log("ENVConfig.baseURL", ENVConfig.baseURL);
-  console.log("🚀  res:", res);
+  console.log("🚀  res:-----------------------------",await res.json());
   if (!res.ok) {
-    throw new Error("Failed to fetch data");
+    console.log("Failed to fetch Hero data");
   }
 
-  return res.json();
+  return res.json();  
 };
 async function Herobox() {
   const { data } = await GetData();
