@@ -6,7 +6,7 @@ import axios from "axios";
 import { ENVConfig } from "@/utils/Config";
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`, { cache: "no-cache" });
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`, { cache: "no-store" });
   if (!res.ok) {
     return { data: null };
   }
