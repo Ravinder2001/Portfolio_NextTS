@@ -14,14 +14,11 @@ type dataType = {
 };
 
 const GetData = async () => {
-  try {
-    const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/review`);
-
-    return res?.data;
-  } catch (err: any) {
-    console.log("err in review", err.message);
-    return {data:null}
+  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/review`, { cache: "no-cache" });
+  if (!res.ok) {
+    return { data: null };
   }
+  return await res.json();
 };
 async function ReviewBox() {
   const { data }: dataType = await GetData();
