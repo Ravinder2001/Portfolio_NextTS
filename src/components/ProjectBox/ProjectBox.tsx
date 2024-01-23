@@ -15,13 +15,14 @@ type DataType = {
   }[];
 };
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/project`);
+  try {
+    const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/project`);
 
-  if (!res.ok) {
-    console.log('Failed to fetch project data')
+    return res?.data;
+  } catch (err: any) {
+    console.log("err in review", err.message);
+    return {data:null}
   }
-
-  return res.json();
 };
 async function ProjectBox() {
   const { data }: DataType = await GetData();

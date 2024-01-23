@@ -6,14 +6,14 @@ import axios from "axios";
 import { ENVConfig } from "@/utils/Config";
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/hero`);
-  console.log("ENVConfig.baseURL", ENVConfig.baseURL);
-  console.log("🚀  res:-----------------------------",await res.json());
-  if (!res.ok) {
-    console.log("Failed to fetch Hero data");
-  }
+  try {
+    const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/hero`);
 
-  return res.json();  
+    return res?.data;
+  } catch (err: any) {
+    console.log("err in review", err.message);
+    return {data:null}
+  }
 };
 async function Herobox() {
   const { data } = await GetData();

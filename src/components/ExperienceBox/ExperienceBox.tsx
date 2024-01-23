@@ -6,13 +6,14 @@ import { ENVConfig } from "@/utils/Config";
 import axios from "axios";
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/experience`);
+  try {
+    const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/experience`);
 
-  if (!res.ok) {
-    console.log('Failed to fetch Experience data')
+    return res?.data;
+  } catch (err: any) {
+    console.log("err in review", err.message);
+    return {data:null}
   }
-
-  return res.json();
 };
 async function ExperienceBox() {
   const { data } = await GetData();

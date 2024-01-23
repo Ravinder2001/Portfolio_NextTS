@@ -15,13 +15,14 @@ type DataType = {
 };
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/skill`);
+  try {
+    const res = await axios.get(`${ENVConfig.baseURL}/api/portfolio/skill`);
 
-  if (!res.ok) {
-    console.log('Failed to fetch Skill data')
+    return res?.data;
+  } catch (err: any) {
+    console.log("err in review", err.message);
+    return {data:null}
   }
-
-  return res.json();
 };
 async function SkillsBox() {
   const { data }: DataType = await GetData();
