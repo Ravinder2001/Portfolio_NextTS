@@ -11,6 +11,8 @@ import AboutBox from "@/components/AboutBox/AboutBox";
 import ContactBox from "@/components/ContactBox/ContactBox";
 import { ENVConfig } from "@/utils/Config";
 
+export const dynamic="force-dynamic"
+
 function page() {
   if (!ENVConfig.baseURL) {
     return null;
