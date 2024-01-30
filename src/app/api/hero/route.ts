@@ -48,7 +48,7 @@ export const POST = async (request: Request) => {
     return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
 
   } catch (error: any) {
-    return new Response(error.message, { status: 400 });
+    return new Response(JSON.stringify({ error: error }), { status: 400 });
   }
 };
 export const GET = async () => {
