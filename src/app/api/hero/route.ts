@@ -8,28 +8,45 @@ import { authoptions } from "../auth/[...nextauth]/route";
 import { ENVConfig } from "@/utils/Config";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { UploadImageToDrive } from "../../../../lib/google-drive";
-
+import { google } from "googleapis";
+import { nanoid } from "nanoid";
+const stream = require("stream");
 export const POST = async (request: Request) => {
   try {
+    const credentials = {
+      client_email: ENVConfig?.google_client_email,
+      private_key: ENVConfig?.google_private_key,
+    };
+    const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ["https://www.googleapis.com/auth/drive"],
+    });
+    const drive = google.drive({ version: "v3", auth });
     const body = await request.json();
-    let data =await UploadImageToDrive(body.image);
-    console.log("🚀  data:", data)
-    return new Response(JSON.stringify({ message: data }), { status: 200 });
+    let id = nanoid(5);
+    console.log("🚀 id:", id);
 
-    const userSession = await getServerSession(authoptions);
+    const fileMetadata = {
+      name: `${id}.jpg`,
+      parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
+    };
 
-    if (!userSession) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+    const uploadImg = body.image.split(/,(.+)/)[1];
+    const buf: Buffer = Buffer.from(uploadImg, "base64");
+    const bs = new stream.PassThrough();
+    bs.end(buf);
 
-    await connectToDB();
-    // if (!body._id) {
-    //   await Hero.create(body);
-    //   return new Response(JSON.stringify({ message: "Hero details Added Succesfully" }), { status: 200 });
-    // } else {
-    //   await Hero.updateOne({ _id: body._id }, body);
-    //   return new Response(JSON.stringify({ message: "Hero details Edited Succesfully" }), { status: 200 });
-    // }
+    const media = {
+      body: bs,
+    };
+
+    const data = await drive.files.create({
+      resource: fileMetadata,
+      media: media,
+      fields: "id",
+    });
+    return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
+
   } catch (error: any) {
     return new Response(error.message, { status: 400 });
   }
