@@ -6,11 +6,12 @@ import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authoptions } from "../auth/[...nextauth]/route";
 import { ENVConfig } from "@/utils/Config";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { UploadImageToDrive } from "../../../../lib/google-drive";
 import { google } from "googleapis";
 import { nanoid } from "nanoid";
 const stream = require("stream");
+
+import fetch from 'node-fetch'; // Import the 'node-fetch' module for making HTTP requests
 
 export const POST = async (request: Request) => {
   try {
@@ -32,34 +33,30 @@ export const POST = async (request: Request) => {
       parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
     };
 
-    const uploadImg = body.image.split(/,(.+)/)[1];
-    const buf: Buffer = Buffer.from(uploadImg, "base64");
+    // Fetch image content from the URL
+    const imageUrl = "https://avatars.githubusercontent.com/u/86410071?v=4";
+    const response = await fetch(imageUrl);
+    const imageBuffer = await response.buffer();
+
     const bs = new stream.PassThrough();
-    bs.end(buf);
+    bs.end(imageBuffer);
 
     const media = {
       body: bs,
     };
 
-    const data = await drive.files.create(
-      {
-        resource: fileMetadata,
-        media: media,
-        fields: "id",
-      },
-      (err: any, file: any) => {
-        if (err) {
-          return new Response(JSON.stringify({ error: err || "Internal Server Error" }), { status: 400 });
-        } else {
-          return new Response(JSON.stringify({ error: file || "Internal Server Error" }), { status: 400 });
-        }
-      }
-    );
+    const data = await drive.files.create({
+      resource: fileMetadata,
+      media: media,
+      fields: "id",
+    });
+
     return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), { status: 400 });
+    return new Response(JSON.stringify({ error: error.message || 'Internal Server Error' }), { status: 400 });
   }
 };
+;
 export const GET = async () => {
   try {
     const userSession = await getServerSession(authoptions);
