@@ -34,13 +34,10 @@ export const POST = async (request: Request) => {
       parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
     };
 
-    // Fetch image content from the URL
-    const imageUrl = "https://avatars.githubusercontent.com/u/86410071?v=4";
-    const response = await fetch(imageUrl);
-    const imageBuffer = await response.buffer();
-
+    const uploadImg = body.image.split(/,(.+)/)[1];
+    const buf: Buffer = Buffer.from(uploadImg, "base64");
     const bs = new stream.PassThrough();
-    bs.end(imageBuffer);
+    bs.end(buf);
 
     const media = {
       body: bs,
