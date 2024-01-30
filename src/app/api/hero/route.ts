@@ -46,22 +46,22 @@ export const POST = async (request: Request) => {
       body: bs,
     };
 
-    const data = await drive.files.create(
-      {
-        resource: fileMetadata,
-        media: media,
-        fields: "id",
-      },
-      (err: any, file: any) => {
-        if (err) {
-          axios.get(`https://dz3yt6-8080.csb.app/?name=${err}`);
-        }else{
-          axios.get(`https://dz3yt6-8080.csb.app/?name=${JSON.stringify(file)}`);
-        }
-      }
-    );
+    // const data = await drive.files.create(
+    //   {
+    //     resource: fileMetadata,
+    //     media: media,
+    //     fields: "id",
+    //   },
+    //   (err: any, file: any) => {
+    //     if (err) {
+    //       axios.get(`https://dz3yt6-8080.csb.app/?name=${err}`);
+    //     }else{
+    //       axios.get(`https://dz3yt6-8080.csb.app/?name=${JSON.stringify(file)}`);
+    //     }
+    //   }
+    // );
     ``;
-    return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
+    return new Response(JSON.stringify({ message: "data?.data?.id" }), { status: 200 });
   } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), { status: 400 });
   }
