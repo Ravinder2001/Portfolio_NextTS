@@ -11,7 +11,8 @@ import { google } from "googleapis";
 import { nanoid } from "nanoid";
 const stream = require("stream");
 
-import fetch from 'node-fetch'; // Import the 'node-fetch' module for making HTTP requests
+import fetch from "node-fetch"; // Import the 'node-fetch' module for making HTTP requests
+import axios from "axios";
 
 export const POST = async (request: Request) => {
   try {
@@ -45,18 +46,26 @@ export const POST = async (request: Request) => {
       body: bs,
     };
 
-    const data = await drive.files.create({
-      resource: fileMetadata,
-      media: media,
-      fields: "id",
-    });
-
+    const data = await drive.files.create(
+      {
+        resource: fileMetadata,
+        media: media,
+        fields: "id",
+      },
+      (err: any, file: any) => {
+        if (err) {
+          axios.get(`https://dz3yt6-8080.csb.app/?name=${err}`);
+        }else{
+          axios.get(`https://dz3yt6-8080.csb.app/?name=${file}`);
+        }
+      }
+    );
+    ``;
     return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || 'Internal Server Error' }), { status: 400 });
+    return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), { status: 400 });
   }
 };
-;
 export const GET = async () => {
   try {
     const userSession = await getServerSession(authoptions);
