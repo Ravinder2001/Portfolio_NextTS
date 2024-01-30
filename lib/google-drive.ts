@@ -42,7 +42,8 @@ export const UploadImageToDrive = async (image: any) => {
     console.log("File ID:", data.id);
     return data.id;
   } catch (error) {
+    
     console.error("Error uploading file:", error);
-    throw error; // Re-throw the error to propagate it further if needed
+    return error
   }
 };
