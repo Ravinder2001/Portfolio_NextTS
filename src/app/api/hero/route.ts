@@ -41,15 +41,23 @@ export const POST = async (request: Request) => {
       body: bs,
     };
 
-    const data = await drive.files.create({
-      resource: fileMetadata,
-      media: media, 
-      fields: "id",
-    });
+    const data = await drive.files.create(
+      {
+        resource: fileMetadata,
+        media: media,
+        fields: "id",
+      },
+      (err: any, file: any) => {
+        if (err) {
+          return new Response(JSON.stringify({ error: err || "Internal Server Error" }), { status: 400 });
+        } else {
+          return new Response(JSON.stringify({ error: file || "Internal Server Error" }), { status: 400 });
+        }
+      }
+    );
     return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
-
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || 'Internal Server Error' }), { status: 400 });
+    return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), { status: 400 });
   }
 };
 export const GET = async () => {
