@@ -14,36 +14,35 @@ const auth = new google.auth.GoogleAuth({
 });
 const drive = google.drive({ version: "v3", auth });
 
-export const UploadImageToDrive = (image: any) => {
-  let id = nanoid(5);
-  console.log("🚀  id:", id);
+export const UploadImageToDrive = async (image: any) => {
+  try {
+    let id = nanoid(5);
+    console.log("🚀 id:", id);
 
-  const fileMetadata = {
-    name: `${id}.jpg`,
-    parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
-  };
+    const fileMetadata = {
+      name: `${id}.jpg`,
+      parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
+    };
 
-  const uploadImg = image.split(/,(.+)/)[1];
-  const buf: Buffer = Buffer.from(uploadImg, "base64"); // Added
-  const bs = new stream.PassThrough(); // Added
-  bs.end(buf); // Added
+    const uploadImg = image.split(/,(.+)/)[1];
+    const buf: Buffer = Buffer.from(uploadImg, "base64");
+    const bs = new stream.PassThrough();
+    bs.end(buf);
 
-  const media = {
-    body: bs, // Modified
-  };
+    const media = {
+      body: bs,
+    };
 
-  drive.files.create(
-    {
+    const { data } = await drive.files.create({
       resource: fileMetadata,
       media: media,
       fields: "id",
-    },
-    (err: any, file: any) => {
-      if (err) {
-        console.error("Error uploading file:", err);
-      } else {
-        console.log("File ID:", file.data.id);
-      }
-    }
-  );
+    });
+
+    console.log("File ID:", data.id);
+    return data.id;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    throw error; // Re-throw the error to propagate it further if needed
+  }
 };

@@ -12,8 +12,9 @@ import { UploadImageToDrive } from "../../../../lib/google-drive";
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    UploadImageToDrive(body.image);
-    return;
+    let data =await UploadImageToDrive(body.image);
+    console.log("🚀  data:", data)
+    return new Response(JSON.stringify({ message: data }), { status: 200 });
 
     const userSession = await getServerSession(authoptions);
 
