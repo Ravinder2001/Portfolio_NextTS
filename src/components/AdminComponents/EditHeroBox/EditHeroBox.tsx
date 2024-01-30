@@ -78,6 +78,7 @@ function EditHeroBox(props: props) {
             });
           }
         } catch (error: any) {
+          console.log(error);
           Swal.fire({
             icon: "error",
             title: "Oops...",
