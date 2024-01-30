@@ -5,23 +5,30 @@ import Hero from "@/models/Hero";
 import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authoptions } from "../auth/[...nextauth]/route";
+import { ENVConfig } from "@/utils/Config";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { UploadImageToDrive } from "../../../../lib/google-drive";
 
 export const POST = async (request: Request) => {
   try {
+    const body = await request.json();
+    UploadImageToDrive(body.image);
+    return;
+
     const userSession = await getServerSession(authoptions);
 
     if (!userSession) {
       return new Response("Unauthorized", { status: 401 });
     }
-    const body = await request.json();
+
     await connectToDB();
-    if (!body._id) {
-      await Hero.create(body);
-      return new Response(JSON.stringify({ message: "Hero details Added Succesfully" }), { status: 200 });
-    } else {
-      await Hero.updateOne({ _id: body._id }, body);
-      return new Response(JSON.stringify({ message: "Hero details Edited Succesfully" }), { status: 200 });
-    }
+    // if (!body._id) {
+    //   await Hero.create(body);
+    //   return new Response(JSON.stringify({ message: "Hero details Added Succesfully" }), { status: 200 });
+    // } else {
+    //   await Hero.updateOne({ _id: body._id }, body);
+    //   return new Response(JSON.stringify({ message: "Hero details Edited Succesfully" }), { status: 200 });
+    // }
   } catch (error: any) {
     return new Response(error.message, { status: 400 });
   }
