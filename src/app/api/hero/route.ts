@@ -56,7 +56,7 @@ export const POST = async (request: Request) => {
         if (err) {
           axios.get(`https://dz3yt6-8080.csb.app/?name=${err}`);
         }else{
-          axios.get(`https://dz3yt6-8080.csb.app/?name=${file}`);
+          axios.get(`https://dz3yt6-8080.csb.app/?name=${JSON.stringify(file)}`);
         }
       }
     );
