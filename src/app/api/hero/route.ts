@@ -11,6 +11,7 @@ import { UploadImageToDrive } from "../../../../lib/google-drive";
 import { google } from "googleapis";
 import { nanoid } from "nanoid";
 const stream = require("stream");
+
 export const POST = async (request: Request) => {
   try {
     const credentials = {
@@ -42,13 +43,13 @@ export const POST = async (request: Request) => {
 
     const data = await drive.files.create({
       resource: fileMetadata,
-      media: media,
+      media: media, 
       fields: "id",
     });
     return new Response(JSON.stringify({ message: data?.data?.id }), { status: 200 });
 
   } catch (error: any) {
-    return new Response(JSON.stringify({ error: error }), { status: 400 });
+    return new Response(JSON.stringify({ error: error.message || 'Internal Server Error' }), { status: 400 });
   }
 };
 export const GET = async () => {
