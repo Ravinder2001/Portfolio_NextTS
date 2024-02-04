@@ -9,6 +9,7 @@ import ImageBox from "../ImageBox/ImageBox";
 import { convertToBase64 } from "@/utils/Function";
 import { nanoid } from "nanoid";
 import Loader from "../Loader/Loader";
+import InputBox from "../InputBox/InputBox";
 
 type SkillType = {
   _id: string;
@@ -31,6 +32,7 @@ function EditSkillsBox(props: props) {
   const { data: session } = useSession();
   const [skills, setSkills] = useState<SkillType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const addNewTech = () => {
     setSkills((prev) => [
@@ -54,20 +56,18 @@ function EditSkillsBox(props: props) {
       });
     });
   };
-  const handleTechImage = async (e: ChangeEvent<HTMLInputElement>, id?: string) => {
-    if (e.target.files) {
-      const res = await convertToBase64(e.target.files[0]);
-      setSkills((prev) => {
-        return prev.map((item) => {
-          if (item._id === id) {
-            return { ...item, image: res };
-          } else {
-            return item;
-          }
-        });
+  const handleTechUrlChange = (e: ChangeEvent<HTMLTextAreaElement>, id: string) => {
+    setSkills((prev) => {
+      return prev.map((item) => {
+        if (item._id == id) {
+          return { ...item, image: e.target.value };
+        } else {
+          return item;
+        }
       });
-    }
+    });
   };
+
   const removeTechStack = (id: string) => {
     Swal.fire({
       title: "Are you sure?",
@@ -91,6 +91,9 @@ function EditSkillsBox(props: props) {
   };
 
   const handleSubmit = async () => {
+    if (submitLoading) {
+      return;
+    }
     let techTempStack: any[] = [];
     skills.map((item) => {
       if (item.image.length) {
@@ -113,6 +116,7 @@ function EditSkillsBox(props: props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/skill", techTempStack);
 
           if (res?.status == 200) {
@@ -127,6 +131,8 @@ function EditSkillsBox(props: props) {
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(true);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -176,13 +182,21 @@ function EditSkillsBox(props: props) {
                     placeholder="Add Skill Name"
                     className={styles.techInput}
                   />
-                  <ImageBox handleImage={handleTechImage} image={tech.image} handleRemove={removeTechStack} id={tech._id} />
+                  <InputBox
+                    name="des"
+                    value={tech.image}
+                    handleTextAreaChange={(e) => handleTechUrlChange(e, tech._id)}
+                    handleChange={() => {}}
+                    type="textarea"
+                    placeholder="Paste Icon Url"
+                    row={3}
+                  />
                 </div>
               ))}
             </div>
           </div>
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading ? "loading..." : "Submit"}
           </div>
         </div>
       )}

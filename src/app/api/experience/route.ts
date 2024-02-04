@@ -2,6 +2,8 @@ import Experience from "@/models/Experience";
 import { connectToDB } from "../../../../lib/Database";
 import { getServerSession } from "next-auth";
 import { authoptions } from "../auth/[...nextauth]/route";
+import { ENVConfig } from "@/utils/Config";
+import { UploadImageToDrive } from "../../../../lib/google-drive";
 
 export const POST = async (request: Request) => {
   try {
@@ -10,19 +12,35 @@ export const POST = async (request: Request) => {
     if (!userSession) {
       return new Response("Unauthorized", { status: 401 });
     }
+
     const body = await request.json();
-    await connectToDB();
+    const companyName = body.company.split(" ")[0].toLowerCase();
+
+    const fileMetadata = {
+      name: `${companyName}_${body.relation_id}.png`,
+      parents: [ENVConfig.google_experience_folder_id],
+    };
+
     if (!body._id) {
-      await Experience.create(body);
-      return new Response(JSON.stringify({ message: "Experience Details Added" }), { status: 200 });
-    } else {
-      await Experience.updateOne({ _id: body._id }, body);
-      return new Response(JSON.stringify({ message: "Experience Details Edited" }), { status: 200 });
+      const imageUrl = await UploadImageToDrive(body.image, fileMetadata);
+      await Experience.create({ ...body, image: imageUrl });
+      return new Response(JSON.stringify({ message: "Experience details added successfully" }), { status: 200 });
     }
-  } catch (err: any) {
-    return new Response(err.message, { status: 400 });
+
+    const isImageChange = body.isImageChange || false;
+    const imageUrl = isImageChange ? await UploadImageToDrive(body.image, fileMetadata) : undefined;
+
+    const updatedBody = imageUrl ? { ...body, image: imageUrl } : body;
+    await Experience.updateOne({ _id: body._id }, updatedBody);
+
+    const responseMessage = isImageChange ? "Experience details edited successfully with new image" : "Experience details edited successfully";
+    return new Response(JSON.stringify({ message: responseMessage }), { status: 200 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+    return new Response(JSON.stringify({ error: errorMessage }), { status: 400 });
   }
 };
+
 export const GET = async () => {
   try {
     const userSession = await getServerSession(authoptions);

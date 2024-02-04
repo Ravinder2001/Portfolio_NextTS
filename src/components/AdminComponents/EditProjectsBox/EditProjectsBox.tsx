@@ -62,6 +62,8 @@ function EditProjectsBox(props: props) {
   const [techStack, setTechStack] = useState<techStackType[]>([]);
   const [existingProjects, setExistingProjects] = useState<existingProjectsType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isImageChange, setImageChange] = useState<boolean>(false);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -80,24 +82,22 @@ function EditProjectsBox(props: props) {
       });
     });
   };
+  const handleTechUrlChange = (e: ChangeEvent<HTMLTextAreaElement>, id: string) => {
+    setTechStack((prev) => {
+      return prev.map((item) => {
+        if (item._id == id) {
+          return { ...item, image: e.target.value };
+        } else {
+          return item;
+        }
+      });
+    });
+  };
   const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
       setValues((prev) => ({ ...prev, image: res }));
-    }
-  };
-  const handleTechImage = async (e: ChangeEvent<HTMLInputElement>, id?: string) => {
-    if (e.target.files) {
-      const res = await convertToBase64(e.target.files[0]);
-      setTechStack((prev) => {
-        return prev.map((item) => {
-          if (item._id === id) {
-            return { ...item, image: res };
-          } else {
-            return item;
-          }
-        });
-      });
+      setImageChange(true);
     }
   };
   const addNewTech = () => {
@@ -124,6 +124,9 @@ function EditProjectsBox(props: props) {
   };
 
   const handleSubmit = async () => {
+    if (submitLoading) {
+      return;
+    }
     let techTempStack: any[] = [];
     techStack.map((item) => {
       if (item.image.length) {
@@ -137,6 +140,7 @@ function EditProjectsBox(props: props) {
       ...values,
       tech: techTempStack,
       relation_id: session?.user.name,
+      isImageChange,
     };
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -148,21 +152,25 @@ function EditProjectsBox(props: props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/project", body);
 
           if (res?.status == 200) {
+            setImageChange(false);
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
             });
           }
         } catch (error: any) {
-          FetchProductList()
+          FetchProductList();
           Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -293,17 +301,31 @@ function EditProjectsBox(props: props) {
                     placeholder="Add Skill Name"
                     className={styles.techInput}
                   />
-                  <ImageBox handleImage={handleTechImage} image={tech.image} handleRemove={removeTechStack} id={tech._id} />
+                  <InputBox
+                    name="des"
+                    value={tech.image}
+                    handleTextAreaChange={(e) => handleTechUrlChange(e, tech._id)}
+                    handleChange={handleChange}
+                    type="textarea"
+                    placeholder="Paste Icon Url"
+                    row={3}
+                  />
                 </div>
               ))}
             </div>
           </div>
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading ? "loading..." : "Submit"}
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox FetchProductList={FetchProductList} existingProjects={existingProjects} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} />
+          <RightBox
+            FetchProductList={FetchProductList}
+            existingProjects={existingProjects}
+            handleEditClick={handleEditClick}
+            loading={loading}
+            handleToogle={handleToogle}
+          />
         </div>
       </div>
     </div>

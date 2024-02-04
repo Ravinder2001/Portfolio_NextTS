@@ -33,7 +33,7 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
-function EditReviewsBox(props:props) {
+function EditReviewsBox(props: props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     name: "",
@@ -44,6 +44,7 @@ function EditReviewsBox(props:props) {
   const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -60,6 +61,9 @@ function EditReviewsBox(props:props) {
   };
 
   const handleSubmit = async () => {
+    if (submitLoading) {
+      return;
+    }
     let body = {
       ...values,
       relation_id: session?.user.name,
@@ -74,10 +78,11 @@ function EditReviewsBox(props:props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/review", body);
 
           if (res?.status == 200) {
-            FetchExistingReviews()
+            FetchExistingReviews();
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -89,6 +94,8 @@ function EditReviewsBox(props:props) {
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -158,7 +165,7 @@ function EditReviewsBox(props:props) {
           </div>
 
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading ? "loading..." : "Submit"}
           </div>
         </div>
         <div className={styles.right}>

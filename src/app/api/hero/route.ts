@@ -1,68 +1,46 @@
-import User from "@/models/User";
-import { NextApiRequest } from "next";
 import { connectToDB } from "../../../../lib/Database";
 import Hero from "@/models/Hero";
-import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authoptions } from "../auth/[...nextauth]/route";
 import { ENVConfig } from "@/utils/Config";
 import { UploadImageToDrive } from "../../../../lib/google-drive";
-import { google } from "googleapis";
-import { nanoid } from "nanoid";
-const stream = require("stream");
-
-import fetch from "node-fetch"; // Import the 'node-fetch' module for making HTTP requests
-import axios from "axios";
+import { GenerateId } from "@/utils/Function";
 
 export const POST = async (request: Request) => {
   try {
-    const credentials = {
-      client_email: ENVConfig?.google_client_email,
-      private_key: ENVConfig?.google_private_key,
-    };
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ["https://www.googleapis.com/auth/drive"],
-    });
-    const drive = google.drive({ version: "v3", auth });
+    const userSession = await getServerSession(authoptions);
+
+    if (!userSession) {
+      return new Response("Unauthorized", { status: 401 });
+    }
+
     const body = await request.json();
-    let id = nanoid(5);
-    console.log("🚀 id:", id);
-
     const fileMetadata = {
-      name: `${id}.jpg`,
-      parents: [ENVConfig.google_folder_id], // Replace with the actual folder ID
+      name: `Hero_${body.relation_id}.png`,
+      parents: [ENVConfig.google_hero_folder_id],
     };
 
-    const uploadImg = body.image.split(/,(.+)/)[1];
-    const buf: Buffer = Buffer.from(uploadImg, "base64");
-    const bs = new stream.PassThrough();
-    bs.end(buf);
+    if (!body._id) {
+      const imageUrl = await UploadImageToDrive(body.image, fileMetadata);
+      await Hero.create({ ...body, image: imageUrl });
+      return new Response(JSON.stringify({ message: "Hero details added successfully" }), { status: 200 });
+    }
 
-    const media = {
-      body: bs,
-    };
+    const isImageChange = body.isImageChange || false;
+    const imageUrl = isImageChange ? await UploadImageToDrive(body.image, fileMetadata) : undefined;
 
-    // const data = await drive.files.create(
-    //   {
-    //     resource: fileMetadata,
-    //     media: media,
-    //     fields: "id",
-    //   },
-    //   (err: any, file: any) => {
-    //     if (err) {
-    //       axios.get(`https://dz3yt6-8080.csb.app/?name=${err}`);
-    //     }else{
-    //       axios.get(`https://dz3yt6-8080.csb.app/?name=${JSON.stringify(file)}`);
-    //     }
-    //   }
-    // );
-    ``;
-    return new Response(JSON.stringify({ message: "data?.data?.id" }), { status: 200 });
-  } catch (error: any) {
-    return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), { status: 400 });
+    const updatedBody = imageUrl ? { ...body, image: imageUrl } : body;
+    await Hero.updateOne({ _id: body._id }, updatedBody);
+
+    const responseMessage = isImageChange ? "Hero details edited successfully with new image" : "Hero details edited successfully";
+    return new Response(JSON.stringify({ message: responseMessage }), { status: 200 });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+    return new Response(JSON.stringify({ error: errorMessage }), { status: 400 });
   }
 };
+
+
 export const GET = async () => {
   try {
     const userSession = await getServerSession(authoptions);

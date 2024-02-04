@@ -40,7 +40,7 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
-function EditExperienceBox(props:props) {
+function EditExperienceBox(props: props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     company: "",
@@ -53,6 +53,8 @@ function EditExperienceBox(props:props) {
 
   const [existingData, setExistingData] = useState<existingDataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isImageChange, setImageChange] = useState<boolean>(false);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -64,6 +66,7 @@ function EditExperienceBox(props:props) {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
       setValues((prev) => ({ ...prev, image: res }));
+      setImageChange(true);
     }
   };
   const handleEditClick = (e: valuesType) => {
@@ -114,7 +117,10 @@ function EditExperienceBox(props:props) {
   };
 
   const handleSubmit = async () => {
-    let body = { ...values, relation_id: session?.user.name };
+    if (submitLoading) {
+      return;
+    }
+    let body = { ...values, relation_id: session?.user.name, isImageChange };
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
@@ -125,10 +131,12 @@ function EditExperienceBox(props:props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/experience", body);
 
           if (res?.status == 200) {
-            FetchExistingExpDetails()
+            FetchExistingExpDetails();
+            setImageChange(false);
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -140,6 +148,8 @@ function EditExperienceBox(props:props) {
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -224,11 +234,17 @@ function EditExperienceBox(props:props) {
             <ImageBox handleImage={handleImage} image={values.image} handleRemove={() => {}} id="" />
           </div>
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading?"loading...":"Submit"}
           </div>
         </div>
         <div className={styles.right}>
-          <RightBox existingData={existingData} handleEditClick={handleEditClick} loading={loading} handleToogle={handleToogle} FetchExistingExpDetails={FetchExistingExpDetails} />
+          <RightBox
+            existingData={existingData}
+            handleEditClick={handleEditClick}
+            loading={loading}
+            handleToogle={handleToogle}
+            FetchExistingExpDetails={FetchExistingExpDetails}
+          />
         </div>
       </div>
     </div>

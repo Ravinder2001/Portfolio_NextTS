@@ -15,7 +15,7 @@ type DataType = {
   }[];
 };
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/portfolio/project`, { cache: "no-store" });
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/project`, { cache: "no-store" });
   if (!res.ok) {
     return { data: null };
   }

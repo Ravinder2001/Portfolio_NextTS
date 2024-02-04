@@ -1,10 +1,5 @@
-import { ObjectId } from "mongodb";
+import { nanoid } from "nanoid";
 
-export const getImageName = (tech: string) => {
-  let imageName = ["React", "Typescript", "Javascript", "SASS", "Postgres", "Node", "AWS", "Socket", "Mongo"];
-  const foundName = imageName.find((name) => tech.toLowerCase().includes(name.toLowerCase()));
-  return foundName || "";
-};
 export const convertToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -22,3 +17,6 @@ export const convertToBase64 = (file: File): Promise<string> => {
   });
 };
 
+export const GenerateId = (digit?: number) => {
+  return nanoid(digit ?? 5);
+};

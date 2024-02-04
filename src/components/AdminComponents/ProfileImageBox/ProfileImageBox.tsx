@@ -21,7 +21,7 @@ function ProfileImageBox(props: props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imgBox}>{image.length ? <Image src={image} className={styles.image} width={100} height={100} alt="" /> : null}</div>
+      <div className={styles.imgBox}>{image.length ? <Image src={image} className={styles.image} width={500} height={500} alt="" /> : null}</div>
       <input type="file" ref={ref} onChange={(e) => handleImage(e, id)} className={styles.input} />
       <div className={styles.btn_group}>
         <div className={styles.btn} onClick={handleClick}>

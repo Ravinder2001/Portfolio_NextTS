@@ -28,10 +28,11 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
-function EditContactUs(props:props) {
+function EditContactUs(props: props) {
   const { data: session } = useSession();
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [github, setGithub] = useState<contactType>({
     name: "",
     link: "",
@@ -109,6 +110,9 @@ function EditContactUs(props:props) {
     }
   };
   const handleUpdate = async () => {
+    if (submitLoading) {
+      return;
+    }
     let body = [{ ...github }, { ...linkedin }, { ...whatsapp }];
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -120,6 +124,7 @@ function EditContactUs(props:props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.put(`/api/contact`, body);
           if (res?.status == 200) {
             Swal.fire({
@@ -133,6 +138,8 @@ function EditContactUs(props:props) {
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -201,7 +208,7 @@ function EditContactUs(props:props) {
             </div>
           </div>
           <div className={styles.btn} onClick={handleUpdate}>
-            Update
+            {submitLoading ? "loading..." : "Update"}
           </div>
         </div>
       )}

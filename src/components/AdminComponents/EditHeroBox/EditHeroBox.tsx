@@ -41,6 +41,8 @@ function EditHeroBox(props: props) {
     location: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [isImageChange, setIsImageChange] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -52,6 +54,7 @@ function EditHeroBox(props: props) {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
       setValues((prev) => ({ ...prev, image: res }));
+      setIsImageChange(true);
     }
   };
   const handleRemoveImage = async () => {
@@ -59,7 +62,10 @@ function EditHeroBox(props: props) {
   };
 
   const handleSubmit = async () => {
-    let body = { ...values, relation_id: session?.user.name };
+    if (submitLoading) {
+      return;
+    }
+    let body = { ...values, relation_id: session?.user.name, isImageChange };
     Swal.fire({
       title: "Do you want to save the changes?",
       showDenyButton: true,
@@ -69,21 +75,25 @@ function EditHeroBox(props: props) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/hero", body);
 
           if (res?.status == 200) {
+            setIsImageChange(false)
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
             });
           }
         } catch (error: any) {
-          console.log(error);
+          console.log("sss", error);
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Something went wrong!",
+            text: error.response.data.error,
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -174,7 +184,7 @@ function EditHeroBox(props: props) {
           </div>
 
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading ? "loading..." : "Submit"}
           </div>
         </div>
       )}

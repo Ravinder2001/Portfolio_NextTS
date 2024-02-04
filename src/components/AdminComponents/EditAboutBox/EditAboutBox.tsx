@@ -29,7 +29,7 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
-function EditAboutBox(props:props) {
+function EditAboutBox(props: props) {
   const { data: session } = useSession();
   const [values, setValues] = useState<valuesType>({
     title: "",
@@ -37,6 +37,8 @@ function EditAboutBox(props:props) {
     image: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [isImageChange, setIsImageChange] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -48,6 +50,7 @@ function EditAboutBox(props:props) {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
       setValues((prev) => ({ ...prev, image: res }));
+      setIsImageChange(true);
     }
   };
   const handleRemove = () => {
@@ -55,9 +58,13 @@ function EditAboutBox(props:props) {
   };
 
   const handleSubmit = async () => {
+    if (submitLoading) {
+      return;
+    }
     let body = {
       ...values,
       relation_id: session?.user.name,
+      isImageChange,
     };
     Swal.fire({
       title: "Do you want to save the changes?",
@@ -69,9 +76,11 @@ function EditAboutBox(props:props) {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         try {
+          setSubmitLoading(true);
           const res = await axios.post("/api/about", body);
 
           if (res?.status == 200) {
+            setIsImageChange(false);
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -83,6 +92,8 @@ function EditAboutBox(props:props) {
             title: "Oops...",
             text: "Something went wrong!",
           });
+        } finally {
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -148,7 +159,7 @@ function EditAboutBox(props:props) {
           </div>
 
           <div className={styles.btn} onClick={handleSubmit}>
-            Submit
+            {submitLoading ? "loading..." : "Submit"}
           </div>
         </div>
       )}
