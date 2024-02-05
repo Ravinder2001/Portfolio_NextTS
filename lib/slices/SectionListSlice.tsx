@@ -15,7 +15,7 @@ const initialState: SectionState = {
     { name: "About", active: true },
     { name: "Contact Us", active: true },
   ],
-  selected: 6,
+  selected: 1,
 };
 
 export const sectionSlice = createSlice({

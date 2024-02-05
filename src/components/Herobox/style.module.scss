@@ -1,9 +1,20 @@
-.container{
-    width: 100%;
-    height: calc(100vh - 200px);
-    background-color: rgb(21, 20, 24);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+.container {
+  background-image: url("https://miller.bslthemes.com/arter-demo/img/bg.jpg");
+//   background-position: bottom;
+//   background-size: cover;
+}
+.main_container {
+  width: 100%;
+  height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(15%, rgba(45, 45, 58, 0.9)),
+    color-stop(50%, rgba(45, 45, 58, 0.7)),
+    to(rgba(43, 43, 53, 0.7))
+  );
 }

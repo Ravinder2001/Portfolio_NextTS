@@ -77,15 +77,27 @@ function EditSkillsBox(props: props) {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
+    }).then(async (result) => { 
       if (result.isConfirmed) {
-        const newArr = skills.filter((item) => item._id != id);
-        setSkills(newArr);
-        Swal.fire({
-          title: "Deleted!",
-          text: "Skill has been deleted.",
-          icon: "success",
-        });
+        try {
+          const res = await axios.delete(`/api/skill/${id}`);
+
+          if (res?.status == 200) {
+            const newArr = skills.filter((item) => item._id != id);
+            setSkills(newArr);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Skill has been deleted.",
+              icon: "success",
+            });
+          }
+        } catch (error: any) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
+        }
       }
     });
   };
@@ -132,7 +144,7 @@ function EditSkillsBox(props: props) {
             text: "Something went wrong!",
           });
         } finally {
-          setSubmitLoading(true);
+          setSubmitLoading(false);
         }
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -191,6 +203,9 @@ function EditSkillsBox(props: props) {
                     placeholder="Paste Icon Url"
                     row={3}
                   />
+                  <div className={styles.techRebtn} onClick={() => removeTechStack(tech._id)}>
+                    Remove
+                  </div>
                 </div>
               ))}
             </div>

@@ -9,7 +9,7 @@ type props = {
 function LabelBox(props: props) {
   return (
     <div className={styles.container}>
-      <Image src={Images(props.icon)} alt="" className={styles.img} />
+      {/* <Image src={Images(props.icon)} alt="" className={styles.img} /> */}
       <div className={styles.label}>{props.label}</div>
     </div>
   );

@@ -66,7 +66,7 @@ function RightBox(props: existingDataType) {
         <div>
           {props.existingData.map((item) => (
             <div className={styles.box} key={item._id}>
-              <Image src={item.image} alt="" width={100} height={100} className={styles.img} />
+              <Image src={item.image} alt="" width={200} height={200} className={styles.img} />
 
               <div className={styles.right}>
                 <div>

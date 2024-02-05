@@ -15,7 +15,7 @@ function ContactBox() {
   const [data, setData] = useState<DataType[]>([]);
 
   const FetchLinks = async () => {
-    const res = await axios.get(`/api/portfolio/contact`);
+    const res = await axios.get(`/api/getPortfolioData/contact`);
     if (res?.data?.data) {
       setData(res?.data?.data);
     } else {

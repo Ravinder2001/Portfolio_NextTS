@@ -17,7 +17,7 @@ function ProjectContainer(props: props) {
   return (
     <div className={props.index % 2 == 0 ? styles.container : styles.container_rev} data-aos={props.index % 2 == 0 ? "fade-right" : "fade-left"}>
       <div className={styles.leftBox}>
-        <Image src={props.projectData.image} alt="" className={styles.img} width={100} height={100} />
+        <Image src={props.projectData.image} alt="" className={styles.img} width={1000} height={800} />
       </div>
       <div className={styles.rightBox}>
         <div className={styles.name}>{props.projectData.name}</div>
@@ -26,7 +26,7 @@ function ProjectContainer(props: props) {
         <div className={styles.stackbox}>
           {props.projectData.tech.map((tech, index) => (
             <div className={styles.stack} key={index}>
-              <Image src={tech.image} alt="" className={styles.icon} width={100} height={100} />
+              <Image src={tech.image} alt="" className={styles.icon} width={500} height={500} />
               <div className={styles.stackName}>{tech.tech_name}</div>
             </div>
           ))}

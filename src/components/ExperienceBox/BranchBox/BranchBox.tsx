@@ -25,7 +25,7 @@ function BranchBox(props: props) {
                     <div className={styles.about}>{exp.des}</div>
                   </div>
 
-                  <Image src={exp.image} alt="" className={styles.img} width={100} height={100} />
+                  <Image src={exp.image} alt="" className={styles.img} width={500} height={500} />
                 </div>
               </li>
             ))}

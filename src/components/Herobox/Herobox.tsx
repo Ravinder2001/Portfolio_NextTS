@@ -17,8 +17,10 @@ async function Herobox() {
 
   return data ? (
     <div className={styles.container}>
-      <LeftBox data={data} />
-      <RightBox image={data.image} />
+      <div className={styles.main_container}>
+        <LeftBox data={data} />
+        <RightBox image={data.image} />
+      </div>
     </div>
   ) : (
     <div>No Data Avaiable!</div>

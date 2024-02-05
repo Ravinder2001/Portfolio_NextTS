@@ -310,6 +310,9 @@ function EditProjectsBox(props: props) {
                     placeholder="Paste Icon Url"
                     row={3}
                   />
+                  <div className={styles.techRebtn} onClick={() => removeTechStack(tech._id)}>
+                    Remove
+                  </div>
                 </div>
               ))}
             </div>

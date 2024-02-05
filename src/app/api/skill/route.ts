@@ -12,6 +12,7 @@ export const POST = async (request: Request) => {
     }
     const body = await request.json();
     await connectToDB();
+    console.log(body);
 
     await Promise.all(
       body.map(async (data: any) => {

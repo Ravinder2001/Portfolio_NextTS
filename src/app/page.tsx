@@ -11,22 +11,49 @@ import AboutBox from "@/components/AboutBox/AboutBox";
 import ContactBox from "@/components/ContactBox/ContactBox";
 import { ENVConfig } from "@/utils/Config";
 
-export const dynamic="force-dynamic"
+export const dynamic = "force-dynamic";
 
-function page() {
+const GetData = async () => {
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/section`, { cache: "no-store", next: { revalidate: 5 } });
+  if (!res.ok) {
+    return { data: null };
+  }
+  return await res.json();
+};
+
+async function page() {
+  const { data } = await GetData();
+  console.log("🚀  data:", data);
   if (!ENVConfig.baseURL) {
     return null;
   }
+
   return (
     <div className={styles.container}>
       <Navbar />
-      <Herobox />
-      <ExperienceBox />
-      <ProjectBox />
-      <SkillsBox />
-      <ReviewBox />
-      <AboutBox />
-      <ContactBox />
+      {data.map((item: any) => {
+        if (item.active) {
+          switch (item.name) {
+            case "Hero":
+              return <Herobox key={item._id} />;
+            case "Experience":
+              return <ExperienceBox key={item._id} />;
+            case "Projects":
+              return <ProjectBox key={item._id} />;
+            case "Skills":
+              return <SkillsBox key={item._id} />;
+            case "Reviews":
+              return <ReviewBox key={item._id} />;
+            case "About":
+              return <AboutBox key={item._id} />;
+            case "Contact Us":
+              return <ContactBox key={item._id} />;
+            default:
+              return null; // or any default behavior
+          }
+        }
+        return null;
+      })}
     </div>
   );
 }

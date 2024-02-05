@@ -21,7 +21,7 @@ async function AboutBox() {
     <div className={styles.container}>
       <div className={styles.box} data-aos="zoom-in">
         <div className={styles.left}>
-          <Image src={data.image} width={100} height={100} alt="" className={styles.img} />
+          <Image src={data.image} width={500} height={500} alt="" className={styles.img} />
         </div>
         <div className={styles.right}>
           <div className={styles.main}>{data.title}</div>
