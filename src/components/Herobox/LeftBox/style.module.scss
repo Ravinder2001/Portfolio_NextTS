@@ -8,29 +8,17 @@
   justify-content: center;
 }
 .name {
-  // color: white;
-  // font-size: 34px;
   color: white;
-  font-family: 'Courier New', Courier, monospace !important;
-  display: flex;
-  align-items: baseline;
+  font-size: 34px;
 }
-.first {
-  font-size: 50px;
-  font-weight: bold;
-}
-.last {
-  // margin-top: -10px;
-  font-size: 20px;
-  margin-left: 5px;
-}
+
 .role {
   margin-top: 10px;
-  color: rgb(201, 199, 199);
+  color: rgb(230, 226, 226);
   font-size: 24px;
 }
 .des {
-  color: rgb(182, 181, 181);
+  color: rgb(213, 212, 212);
   font-size: 20px;
   margin-top: 20px;
 }
@@ -39,3 +27,4 @@
   font-size: 24px;
   margin-top: 30px;
 }
+

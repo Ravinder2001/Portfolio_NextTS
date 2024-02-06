@@ -23,7 +23,7 @@ const GetData = async () => {
 async function ReviewBox() {
   const { data }: dataType = await GetData();
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="Reviews">
       <div className={styles.heading}>Reviews</div>
       {data ? (
         <Marquee direction="left" style={{ marginTop: "50px" }}>

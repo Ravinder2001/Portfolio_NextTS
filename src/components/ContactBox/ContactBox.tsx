@@ -30,7 +30,7 @@ function ContactBox() {
     FetchLinks();
   }, []);
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id="Contact">
       {data.map((contact) => (
         <div data-aos="fade-up" className={styles.box} key={contact._id} onClick={() => handleClick(contact.link)}>
           <SVGIcons name={contact.name} />

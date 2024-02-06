@@ -18,7 +18,7 @@ const GetData = async () => {
 async function AboutBox() {
   const { data }: dataType = await GetData();
   return data ? (
-    <div className={styles.container}>
+    <div className={styles.container} id="About">
       <div className={styles.box} data-aos="zoom-in">
         <div className={styles.left}>
           <Image src={data.image} width={500} height={500} alt="" className={styles.img} />

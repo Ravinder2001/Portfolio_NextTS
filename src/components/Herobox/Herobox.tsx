@@ -16,7 +16,7 @@ async function Herobox() {
   const { data } = await GetData();
 
   return data ? (
-    <div className={styles.container}>
+    <div className={styles.container} id="Hero">
       <div className={styles.main_container}>
         <LeftBox data={data} />
         <RightBox image={data.image} />

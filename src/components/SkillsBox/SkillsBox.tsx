@@ -24,7 +24,7 @@ const GetData = async () => {
 async function SkillsBox() {
   const { data }: DataType = await GetData();
   return (
-    <div className={styles.container}>
+    <div className={styles.container}id="Skills">
       <div className={styles.heading}>Skills</div>
       {data ? (
         <div className={styles.skillBox}>
