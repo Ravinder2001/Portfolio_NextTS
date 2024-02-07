@@ -5,25 +5,33 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 function LoginBox() {
-  const router=useRouter()
+  const router = useRouter();
   const [values, setValues] = useState<{ username: string; password: string }>({ username: "Ravi", password: "sss" });
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = async () => {
+    if (loading) {
+      return;
+    }
     try {
+      setLoading(true);
       const res = await signIn("credentials", {
         username: values.username,
         password: values.password,
         redirect: false,
       });
       if (res?.error) {
-        alert("invalid");
+        alert("Wrong Credentials");
         return;
       }
-      router.push("/admin/dashboard")
+      router.push("/admin/dashboard");
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -38,7 +46,7 @@ function LoginBox() {
           <input type="password" value={values.password} onChange={handleChange} name="password" className={styles.input} />
         </div>
         <div className={styles.btn} onClick={handleSubmit}>
-          Submit
+          {loading ? "loading..." : "Submit"}
         </div>
       </div>
     </div>
