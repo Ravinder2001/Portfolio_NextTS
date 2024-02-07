@@ -1,18 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styles from "./style.module.scss";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
+import Image from "next/image";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
-import ImageBox from "../ImageBox/ImageBox";
-import { convertToBase64 } from "@/utils/Function";
-import { nanoid } from "nanoid";
+
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import Loader from "../Loader/Loader";
-import InputBox from "../InputBox/InputBox";
 import TechSelectModal from "../TechBox/TechBox";
 import Data from "@/utils/IconList";
-import Image from "next/image";
 import LucideIcons from "@/icons/LucideIcons";
+
+import styles from "./style.module.scss";
+
 type SkillType = {
   tech_name: string;
   image: string;
@@ -30,8 +29,10 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
 function EditSkillsBox(props: props) {
   const { data: session } = useSession();
+
   const [skills, setSkills] = useState<SkillType>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
@@ -151,6 +152,7 @@ function EditSkillsBox(props: props) {
       }
     });
   };
+
   const FetchExistingSkills = async () => {
     setLoading(true);
     try {
@@ -167,13 +169,16 @@ function EditSkillsBox(props: props) {
     }
     setLoading(false);
   };
+
   const handleIconModal = () => {
     setIconModal(!iconModal);
   };
+  
   useEffect(() => {
     FetchExistingSkills();
     Data.map((item) => setSkills((prev) => [...prev, { ...item, isSelected: false }]));
   }, []);
+  
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>

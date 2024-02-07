@@ -1,5 +1,6 @@
 "use client";
 import React, { ChangeEvent } from "react";
+
 import styles from "./style.module.scss";
 
 type props = {
@@ -11,6 +12,7 @@ type props = {
   name: string;
   row?: number;
 };
+
 function InputBox(props: props) {
   return props.type == "text"|| props.type=="number" ? (
     <input

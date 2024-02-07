@@ -1,11 +1,12 @@
 import React from "react";
-import styles from "./style.module.scss";
-import SVGIcons from "@/icons/SVGIcons";
 import Image from "next/image";
-import Images from "@/icons/Images";
+
+import styles from "./style.module.scss";
+
 type props = {
   expData: { company: string; _id: string; des: string; role: string; duration: string; image: string }[];
 };
+
 function BranchBox(props: props) {
   return (
     <div className={styles.container}>
@@ -25,7 +26,7 @@ function BranchBox(props: props) {
                     <div className={styles.about}>{exp.des}</div>
                   </div>
 
-                  <Image src={exp.image} alt="" className={styles.img} width={500} height={500} />
+                  <Image src={exp.image} alt="" className={styles.img} width={1000} height={1000} />
                 </div>
               </li>
             ))}

@@ -1,5 +1,7 @@
 import React from "react";
+
 import styles from "./style.module.scss";
+
 type props = {
   data: {
     _id: string;
@@ -8,6 +10,7 @@ type props = {
     des: string;
   };
 };
+
 function ReviewComponent(props: props) {
   const { data } = props;
   return (

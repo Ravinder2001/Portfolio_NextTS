@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction } from "react";
-import styles from "./style.module.scss";
-import Image from "next/image";
-import Images from "@/icons/Images";
-import LucideIcons from "@/icons/LucideIcons";
+import React from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+
+import LucideIcons from "@/icons/LucideIcons";
 import Loader from "../../Loader/Loader";
+
+import styles from "./style.module.scss";
 
 type existingDataType = {
   existingData: {
@@ -19,6 +19,7 @@ type existingDataType = {
   loading: boolean;
   FetchExistingReviews:()=>void
 };
+
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
     Swal.fire({
@@ -51,6 +52,7 @@ function RightBox(props: existingDataType) {
       }
     });
   };
+  
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Existing Reviews</div>

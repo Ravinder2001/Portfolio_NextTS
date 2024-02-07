@@ -1,8 +1,10 @@
 import React from "react";
-import styles from "./style.module.scss";
-import ResumeBtn from "./ResumeBtn/ResumeBtn";
 
+import ResumeBtn from "./ResumeBtn/ResumeBtn";
 import Stats from "./Stats/Stats";
+
+import styles from "./style.module.scss";
+
 type props = {
   data: {
     title: string;
@@ -16,6 +18,7 @@ type props = {
     resume: string;
   };
 };
+
 function LeftBox(props: props) {
   const { data } = props;
   return (

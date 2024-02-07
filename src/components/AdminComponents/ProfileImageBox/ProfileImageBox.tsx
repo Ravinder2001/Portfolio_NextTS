@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useRef } from "react";
-import styles from "./style.module.scss";
 import Image from "next/image";
+
+import styles from "./style.module.scss";
 
 type props = {
   id: string;

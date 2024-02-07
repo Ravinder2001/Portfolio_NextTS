@@ -1,17 +1,19 @@
 import React from "react";
-import styles from "./style.module.scss";
+
 import LeftBox from "./LeftBox/LeftBox";
 import RightBox from "./RightBox/RightBox";
-import axios from "axios";
 import { ENVConfig } from "@/utils/Config";
 
+import styles from "./style.module.scss";
+
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/hero`, { cache: "no-store", next: { revalidate: 5 } });
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/hero`);
   if (!res.ok) {
     return { data: null };
   }
   return await res.json();
 };
+
 async function Herobox() {
   const { data } = await GetData();
 

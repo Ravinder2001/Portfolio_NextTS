@@ -1,9 +1,10 @@
 "use client";
-import SVGIcons from "@/icons/SVGIcons";
 import React, { useState, useEffect } from "react";
-import styles from "./style.module.scss";
 import axios from "axios";
-import { ENVConfig } from "@/utils/Config";
+
+import SVGIcons from "@/icons/SVGIcons";
+
+import styles from "./style.module.scss";
 
 type DataType = {
   _id: string;

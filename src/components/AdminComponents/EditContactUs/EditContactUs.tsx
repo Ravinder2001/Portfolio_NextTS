@@ -1,10 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styles from "./style.module.scss";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import Loader from "../Loader/Loader";
+
+import styles from "./style.module.scss";
 
 type contactType = {
   name: string;
@@ -13,11 +15,6 @@ type contactType = {
   _id?: string;
 };
 
-let options = {
-  github: "Github",
-  linkedin: "Linkedin",
-  whatsapp: "WhatsApp",
-};
 type props = {
   data:
     | {
@@ -28,8 +25,16 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
+let options = {
+  github: "Github",
+  linkedin: "Linkedin",
+  whatsapp: "WhatsApp",
+};
+
 function EditContactUs(props: props) {
   const { data: session } = useSession();
+
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
@@ -61,6 +66,7 @@ function EditContactUs(props: props) {
         return e.target.value;
     }
   };
+
   const handleToogle = (e: ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case options.github:
@@ -72,10 +78,6 @@ function EditContactUs(props: props) {
       default:
         return e.target.value;
     }
-  };
-
-  const ToogleVisible = () => {
-    setIsVisible(!isVisible);
   };
 
   const handleCreate = async () => {
@@ -109,6 +111,7 @@ function EditContactUs(props: props) {
       });
     }
   };
+
   const handleUpdate = async () => {
     if (submitLoading) {
       return;
@@ -171,9 +174,11 @@ function EditContactUs(props: props) {
       console.log(err.message);
     }
   };
+
   useEffect(() => {
     FetchExistingContactList();
   }, []);
+  
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>

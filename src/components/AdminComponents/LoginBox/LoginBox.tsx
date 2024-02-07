@@ -1,17 +1,20 @@
 "use client";
 import React, { ChangeEvent, useState } from "react";
-import styles from "./style.module.scss";
-import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+
+import styles from "./style.module.scss";
+
 function LoginBox() {
   const router = useRouter();
+
   const [values, setValues] = useState<{ username: string; password: string }>({ username: "Ravi", password: "sss" });
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+  
   const handleSubmit = async () => {
     if (loading) {
       return;
@@ -34,6 +37,7 @@ function LoginBox() {
       setLoading(false);
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.main_box}>

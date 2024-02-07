@@ -1,10 +1,9 @@
 import React from "react";
-import styles from "./style.module.scss";
 import Image from "next/image";
-// import Images from "@/icons/Images";
-// import { getImageName } from "@/utils/Function";
+
 import { ENVConfig } from "@/utils/Config";
-import axios from "axios";
+
+import styles from "./style.module.scss";
 
 type DataType = {
   data: {
@@ -15,16 +14,17 @@ type DataType = {
 };
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/skill`, { cache: "no-store" });
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/skill`);
   if (!res.ok) {
     return { data: null };
   }
   return await res.json();
 };
+
 async function SkillsBox() {
   const { data }: DataType = await GetData();
   return (
-    <div className={styles.container}id="Skills">
+    <div className={styles.container} id="Skills">
       <div className={styles.heading}>Skills</div>
       {data ? (
         <div className={styles.skillBox}>

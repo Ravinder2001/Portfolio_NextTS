@@ -1,10 +1,13 @@
 import React, { ChangeEvent } from "react";
-import styles from "./style.module.scss"; // Import your modular CSS file
+
+import styles from "./style.module.scss";
+
 type props = {
   value: boolean;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
 };
+
 const DefaultToogle = (props: props) => {
   return (
     <label className={styles.switch}>

@@ -1,9 +1,11 @@
 import React from "react";
-import styles from "./style.module.scss";
 import Marquee from "react-fast-marquee";
+
 import ReviewComponent from "./ReviewComponent/ReviewComponent";
 import { ENVConfig } from "@/utils/Config";
-import axios from "axios";
+
+import styles from "./style.module.scss";
+
 type dataType = {
   data: {
     _id: string;
@@ -14,12 +16,13 @@ type dataType = {
 };
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/review`, { cache: "no-store" });
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/review`);
   if (!res.ok) {
     return { data: null };
   }
   return await res.json();
 };
+
 async function ReviewBox() {
   const { data }: dataType = await GetData();
   return (

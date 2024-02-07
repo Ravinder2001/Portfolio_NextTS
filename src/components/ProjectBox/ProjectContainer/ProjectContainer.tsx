@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import styles from "./style.module.scss";
 import Image from "next/image";
-import LucideIcons from "@/icons/LucideIcons";
+
 import VisitBtn from "./VisitBtn/VisitBtn";
 import GithubBtn from "./GithubBtn/GithubBtn";
+
+import styles from "./style.module.scss";
 
 type props = {
   projectData: {
@@ -18,6 +19,7 @@ type props = {
   };
   index: number;
 };
+
 function ProjectContainer(props: props) {
   return (
     <div className={props.index % 2 == 0 ? styles.container : styles.container_rev} data-aos={props.index % 2 == 0 ? "fade-right" : "fade-left"}>

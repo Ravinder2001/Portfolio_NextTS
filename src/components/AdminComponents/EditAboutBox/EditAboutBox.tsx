@@ -1,15 +1,16 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-import styles from "./style.module.scss";
-import InputBox from "../InputBox/InputBox";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
-import ImageBox from "../ImageBox/ImageBox";
-import { convertToBase64 } from "@/utils/Function";
+import axios from "axios";
+
+import InputBox from "../InputBox/InputBox";
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import Loader from "../Loader/Loader";
 import ProfileImageBox from "../ProfileImageBox/ProfileImageBox";
+import { convertToBase64 } from "@/utils/Function";
+
+import styles from "./style.module.scss";
 
 type valuesType = {
   title: string;
@@ -28,8 +29,10 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
 function EditAboutBox(props: props) {
   const { data: session } = useSession();
+
   const [values, setValues] = useState<valuesType>({
     title: "",
     des: "",
@@ -42,9 +45,11 @@ function EditAboutBox(props: props) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
@@ -52,6 +57,7 @@ function EditAboutBox(props: props) {
       setIsImageChange(true);
     }
   };
+
   const handleRemove = () => {
     setValues((prev) => ({ ...prev, image: "" }));
   };
@@ -112,9 +118,11 @@ function EditAboutBox(props: props) {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     FetchExistingAboutDetails();
   }, []);
+  
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>

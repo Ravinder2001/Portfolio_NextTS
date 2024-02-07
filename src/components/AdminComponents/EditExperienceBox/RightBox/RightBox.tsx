@@ -1,12 +1,13 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
-import styles from "./style.module.scss";
+import React, { ChangeEvent } from "react";
 import Image from "next/image";
-import Images from "@/icons/Images";
-import LucideIcons from "@/icons/LucideIcons";
-import axios from "axios";
 import Swal from "sweetalert2";
+import axios from "axios";
+
+import LucideIcons from "@/icons/LucideIcons";
 import Loader from "../../Loader/Loader";
 import DefaultToogle from "../../ToogleBtn/ToogleBtn";
+
+import styles from "./style.module.scss";
 
 type existingDataType = {
   existingData: {
@@ -23,6 +24,7 @@ type existingDataType = {
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
   FetchExistingExpDetails: () => void;
 };
+
 function RightBox(props: existingDataType) {
   const handleDelete = (id: string) => {
     Swal.fire({

@@ -1,9 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
-import Data from "@/utils/IconList";
-import styles from "./style.module.scss";
 import Image from "next/image";
+
 import InputBox from "../InputBox/InputBox";
+
+import styles from "./style.module.scss";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -26,10 +28,13 @@ interface props {
   onSelect: (id: string | number) => void;
   onDeSelect: (id: string | number) => void;
 }
+
 function TechSelectModal(props: props) {
   const { open, handleModal, list, onDeSelect, onSelect } = props;
+
   const [text, setText] = useState<string>("");
   const [data, setData] = useState<{ isSelected: boolean; image: string; tech_name: string; _id: string | number }[]>(list);
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
@@ -43,6 +48,7 @@ function TechSelectModal(props: props) {
       setData(list);
     }
   }, [text]);
+  
   return (
     <Modal isOpen={open} style={customStyles} contentLabel="Example Modal">
       <div className={styles.container}>

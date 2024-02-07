@@ -1,11 +1,13 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
-import styles from "./style.module.scss";
-import Image from "next/image";
-import LucideIcons from "@/icons/LucideIcons";
-import axios from "axios";
 import Swal from "sweetalert2";
+import Image from "next/image";
+import axios from "axios";
+
+import LucideIcons from "@/icons/LucideIcons";
 import Loader from "../../Loader/Loader";
 import DefaultToogle from "../../ToogleBtn/ToogleBtn";
+
+import styles from "./style.module.scss";
 
 type existingDataType = {
   existingProjects: {
@@ -43,7 +45,9 @@ type existingDataType = {
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
   FetchProductList: () => void;
 };
+
 function RightBox(props: existingDataType) {
+
   const handleDelete = (id: string) => {
     Swal.fire({
       title: "Are you sure?",
@@ -76,6 +80,7 @@ function RightBox(props: existingDataType) {
       }
     });
   };
+  
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Existing Projects</div>

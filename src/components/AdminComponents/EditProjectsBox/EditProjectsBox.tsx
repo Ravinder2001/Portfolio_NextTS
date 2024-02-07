@@ -1,19 +1,19 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-import styles from "./style.module.scss";
-import InputBox from "../InputBox/InputBox";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import axios from "axios";
-
-import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
+import InputBox from "../InputBox/InputBox";
 import RightBox from "./RightBox/RightBox";
 import ImageBox from "../ImageBox/ImageBox";
-import { convertToBase64 } from "@/utils/Function";
-import LucideIcons from "@/icons/LucideIcons";
 import TechSelectModal from "../TechBox/TechBox";
 import Data from "@/utils/IconList";
-import Image from "next/image";
+import { convertToBase64 } from "@/utils/Function";
+
+import styles from "./style.module.scss";
 
 type valuesType = {
   name: string;
@@ -57,8 +57,10 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
 function EditProjectsBox(props: props) {
   const { data: session } = useSession();
+  
   const [values, setValues] = useState<valuesType>({
     name: "",
     type: "",

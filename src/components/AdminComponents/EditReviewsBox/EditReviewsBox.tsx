@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-import styles from "./style.module.scss";
-import InputBox from "../InputBox/InputBox";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+
+import InputBox from "../InputBox/InputBox";
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import RightBox from "./RightBox/RightBox";
+
+import styles from "./style.module.scss";
 
 type valuesType = {
   name: string;
@@ -32,8 +34,10 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
 function EditReviewsBox(props: props) {
   const { data: session } = useSession();
+
   const [values, setValues] = useState<valuesType>({
     name: "",
     star: 0,
@@ -41,7 +45,6 @@ function EditReviewsBox(props: props) {
     active: true,
   });
   const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
-
   const [loading, setLoading] = useState<boolean>(true);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
@@ -114,9 +117,11 @@ function EditReviewsBox(props: props) {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     FetchExistingReviews();
   }, []);
+  
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>

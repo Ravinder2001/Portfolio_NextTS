@@ -1,17 +1,16 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
-import styles from "./style.module.scss";
-import InputBox from "../InputBox/InputBox";
-import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import { getServerSession } from "next-auth";
-import { authoptions } from "@/app/api/auth/[...nextauth]/route";
+import Swal from "sweetalert2";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import Swal from "sweetalert2";
+
+import InputBox from "../InputBox/InputBox";
+import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import Loader from "../Loader/Loader";
-import ImageBox from "../ImageBox/ImageBox";
-import { convertToBase64 } from "@/utils/Function";
 import ProfileImageBox from "../ProfileImageBox/ProfileImageBox";
+import { convertToBase64 } from "@/utils/Function";
+
+import styles from "./style.module.scss";
 
 type valuesType = {
   title: string;
@@ -36,8 +35,10 @@ type props = {
     | undefined;
   handleToogle: (e: ChangeEvent<HTMLInputElement>, id: string) => void;
 };
+
 function EditHeroBox(props: props) {
   const { data: session } = useSession();
+
   const [values, setValues] = useState<valuesType>({
     title: "",
     role: "",
@@ -50,7 +51,6 @@ function EditHeroBox(props: props) {
     skills: "",
     resume: "",
   });
-  console.log("values", values);
   const [loading, setLoading] = useState<boolean>(true);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [isImageChange, setIsImageChange] = useState<boolean>(false);
@@ -128,6 +128,7 @@ function EditHeroBox(props: props) {
     }
     setLoading(false);
   };
+  
   useEffect(() => {
     FetchHeroDetails();
   }, []);
