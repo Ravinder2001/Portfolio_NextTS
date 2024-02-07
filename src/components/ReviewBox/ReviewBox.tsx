@@ -29,21 +29,21 @@ async function ReviewBox() {
     <div className={styles.container} id="Reviews">
       <div className={styles.heading}>Reviews</div>
       {data ? (
-        <Marquee direction="left" style={{ marginTop: "50px" }}>
-          {data.map((review) => (
-            <ReviewComponent data={review} key={review._id} />
-          ))}
-        </Marquee>
+        <>
+          <Marquee direction="left" style={{ marginTop: "50px" }}>
+            {data.slice(0, Math.ceil(data.length / 2)).map((review) => (
+              <ReviewComponent data={review} key={review._id} />
+            ))}
+          </Marquee>
+          <Marquee direction="right" style={{ marginTop: "50px" }}>
+            {data.slice(Math.floor(data.length / 2), data.length).map((review) => (
+              <ReviewComponent data={review} key={review._id} />
+            ))}
+          </Marquee>
+        </>
       ) : (
         <div>No Data</div>
       )}
-
-      {/* <Marquee direction="right" style={{ marginTop: "20px" }}>
-        <ReviewComponent />
-        <ReviewComponent />
-        <ReviewComponent />
-        <ReviewComponent />
-      </Marquee> */}
     </div>
   );
 }

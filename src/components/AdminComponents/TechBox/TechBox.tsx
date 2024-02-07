@@ -34,23 +34,26 @@ function TechSelectModal(props: props) {
 
   const [text, setText] = useState<string>("");
   const [data, setData] = useState<{ isSelected: boolean; image: string; tech_name: string; _id: string | number }[]>(list);
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
   useEffect(() => {
     if (text.length) {
+      console.log("hii")
       let newArr = list.filter((item) => item.tech_name.toLocaleLowerCase().includes(text.toLocaleLowerCase()));
-
       setData(newArr);
     } else {
       setData(list);
     }
   }, [text]);
-  
+  useEffect(()=>{
+    setData(list)
+  },[list])
+
   return (
-    <Modal isOpen={open} style={customStyles} contentLabel="Example Modal">
+    <Modal isOpen={open} style={customStyles} contentLabel="Example Modal" ariaHideApp={false}>
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.heading}>Please select the techonology</div>

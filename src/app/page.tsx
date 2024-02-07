@@ -23,6 +23,7 @@ const GetData = async () => {
 
 async function page() {
   const { data } = await GetData();
+
   if (!ENVConfig.baseURL) {
     return null;
   }

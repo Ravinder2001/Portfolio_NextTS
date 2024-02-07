@@ -6,6 +6,19 @@
   padding: 10px 10px;
   border-radius: 2px;
   margin-top: 20px;
+  cursor: pointer;
+}
+.sec_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // border: 1px solid rgb(191, 15, 15);
+  padding: 10px 10px;
+  border-radius: 2px;
+  margin-top: 20px;
+  background-color: rgb(10, 10, 10);
+  color: white;
+  cursor: pointer;
 }
 .title {
   font-size: 22px;
