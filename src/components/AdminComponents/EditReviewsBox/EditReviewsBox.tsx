@@ -3,7 +3,6 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "./style.module.scss";
 import InputBox from "../InputBox/InputBox";
 import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import StackTable from "../StackTable/StackTable";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import Swal from "sweetalert2";

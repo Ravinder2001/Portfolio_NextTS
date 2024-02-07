@@ -59,36 +59,38 @@
   // padding: 10px;
 }
 .techBox {
+  //   border: 1px solid red;
+
+  width: 100%;
+  height: auto;
   display: flex;
   flex-wrap: wrap;
 }
-.techContainer {
-  border: 1px solid rgb(178, 176, 176);
-  width: 230px;
-  padding: 5px;
+.tech {
+  border: 1px solid rgb(109, 5, 154);
+  padding: 10px 10px;
   margin: 5px;
   border-radius: 4px;
-}
-.techInput {
-  width: 100%;
-  font-size: 16px;
-  margin-bottom: 5px;
-  padding: 5px 5px;
-  border: none;
-  border: 1px solid rgb(203, 202, 202);
-}
-.techInput:focus {
-  outline: none;
-}
-.techRebtn {
-  background-color: rgb(153, 2, 2);
-  color: white;
-  width: 100%;
-  border-radius: 4px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 5px;
-  // margin-top: 10px;
+}
+.tech_selected {
+  background-color: rgb(49, 108, 108);
+  border: 1px solid rgb(49, 108, 108);
+  padding: 10px 10px;
+  margin: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.tech_image {
+  object-fit: contain;
+  width: 30px !important;
+  height: 30px !important;
+}
+.tech_name {
+  margin-left: 10px;
 }

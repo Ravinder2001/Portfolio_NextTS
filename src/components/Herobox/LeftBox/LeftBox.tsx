@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./style.module.scss";
 import ResumeBtn from "./ResumeBtn/ResumeBtn";
+
+import Stats from "./Stats/Stats";
 type props = {
   data: {
     title: string;
@@ -17,7 +19,12 @@ function LeftBox(props: props) {
       <div className={styles.role}>{data.role}</div>
       <div className={styles.des}>{data.des}</div>
       <div className={styles.location}>{data.location}</div>
-      <ResumeBtn/>
+      <ResumeBtn />
+      <div className={styles.bottom_container}>
+        <Stats count={2} isPlus={true} label="Years Experience" />
+        <Stats count={10} isPlus={false} label="Projects Completed" />
+        <Stats count={10} isPlus={false} label="Skills" />
+      </div>
     </div>
   );
 }

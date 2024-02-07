@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
-import Images from "@/icons/Images";
+// import Images from "@/icons/Images";
 // import { getImageName } from "@/utils/Function";
 import { ENVConfig } from "@/utils/Config";
 import axios from "axios";
@@ -30,7 +30,7 @@ async function SkillsBox() {
         <div className={styles.skillBox}>
           {data.map((skill, index) => (
             <div key={index} className={styles.box} data-aos="flip-up">
-              <Image className={styles.img} src={skill.image} alt="" width={500} height={500} />
+              <Image className={styles.img} src={skill.image} alt="" width={800} height={800} />
               <div className={styles.name}>{skill.name}</div>
             </div>
           ))}

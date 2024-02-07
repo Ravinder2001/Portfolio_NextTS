@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, Trash2, PencilLine } from "lucide-react";
+import { ChevronDown, ChevronRight, Trash2, PencilLine, ExternalLink } from "lucide-react";
 
 const LucideIcons = ({ name, size, color }: { name: string; size?: number; color?: string }) => {
   switch (name) {
@@ -10,6 +10,8 @@ const LucideIcons = ({ name, size, color }: { name: string; size?: number; color
       return <Trash2 size={size} color={color} />;
     case "edit":
       return <PencilLine size={size} color={color} />;
+    case "visit":
+      return <ExternalLink  size={size} color={color} />;
     default:
       return null;
   }

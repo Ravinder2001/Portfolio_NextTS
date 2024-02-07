@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
+import LucideIcons from "@/icons/LucideIcons";
+import VisitBtn from "./VisitBtn/VisitBtn";
 
 type props = {
   projectData: {
@@ -31,6 +33,7 @@ function ProjectContainer(props: props) {
             </div>
           ))}
         </div>
+        <VisitBtn />
       </div>
     </div>
   );

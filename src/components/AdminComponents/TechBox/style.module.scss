@@ -1,0 +1,59 @@
+.container {
+  width: 600px;
+  height: 500px;
+  overflow: auto;
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.close{
+  font-size: 24px;
+  cursor: pointer;
+}
+.heading {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.box {
+  //   border: 1px solid red;
+
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.tech {
+  border: 1px solid rgb(109, 5, 154);
+  padding: 10px 10px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.tech_selected {
+  background-color: rgb(49, 108, 108);
+  border: 1px solid rgb(49, 108, 108);
+  padding: 10px 10px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.tech_image{
+    object-fit: contain;
+    width: 30px;
+    height: 30px;
+}
+.tech_name{
+    margin-left: 10px;
+}
+.input{
+  width: 100%;
+  font-size: 24px;
+  margin-top: 10px;
+}

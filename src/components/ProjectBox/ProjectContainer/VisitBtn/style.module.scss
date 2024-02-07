@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(230, 125, 5);
+  width: 150px;
+  height: 40px;
+  border-radius: 4px;
+  margin-left: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.text{
+    font-size: 18px;
+}
+.icon{
+    margin-left: 5px;
+    margin-top: 3px;
+}

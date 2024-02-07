@@ -3,7 +3,6 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "./style.module.scss";
 import InputBox from "../InputBox/InputBox";
 import DefaultToogle from "../ToogleBtn/ToogleBtn";
-import StackTable from "../StackTable/StackTable";
 import axios from "axios";
 
 import { useSession } from "next-auth/react";
@@ -12,6 +11,9 @@ import RightBox from "./RightBox/RightBox";
 import ImageBox from "../ImageBox/ImageBox";
 import { convertToBase64 } from "@/utils/Function";
 import LucideIcons from "@/icons/LucideIcons";
+import TechSelectModal from "../TechBox/TechBox";
+import Data from "@/utils/IconList";
+import Image from "next/image";
 
 type valuesType = {
   name: string;
@@ -37,8 +39,9 @@ type existingProjectsType = {
 type techStackType = {
   tech_name: string;
   image: string;
-  _id: string;
-};
+  _id: string | number;
+  isSelected: boolean;
+}[];
 
 type props = {
   data:
@@ -59,11 +62,12 @@ function EditProjectsBox(props: props) {
     image: "",
     active: true,
   });
-  const [techStack, setTechStack] = useState<techStackType[]>([]);
+  const [techStack, setTechStack] = useState<techStackType>([]);
   const [existingProjects, setExistingProjects] = useState<existingProjectsType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isImageChange, setImageChange] = useState<boolean>(false);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [iconModal, setIconModal] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -71,28 +75,7 @@ function EditProjectsBox(props: props) {
   const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleTechNameChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-    setTechStack((prev) => {
-      return prev.map((item) => {
-        if (item._id == id) {
-          return { ...item, tech_name: e.target.value };
-        } else {
-          return item;
-        }
-      });
-    });
-  };
-  const handleTechUrlChange = (e: ChangeEvent<HTMLTextAreaElement>, id: string) => {
-    setTechStack((prev) => {
-      return prev.map((item) => {
-        if (item._id == id) {
-          return { ...item, image: e.target.value };
-        } else {
-          return item;
-        }
-      });
-    });
-  };
+
   const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const res = await convertToBase64(e.target.files[0]);
@@ -100,27 +83,39 @@ function EditProjectsBox(props: props) {
       setImageChange(true);
     }
   };
-  const addNewTech = () => {
-    setTechStack((prev) => [
-      ...prev,
-      {
-        tech_name: "",
-        image: "",
-        _id: Math.random().toString(),
-      },
-    ]);
+  const addNewTech = (id: string | number) => {
+    setTechStack((prev) => {
+      return prev.map((item) => {
+        if (item._id === id) {
+          return { ...item, isSelected: true };
+        } else {
+          return item;
+        }
+      });
+    });
   };
+
   const removeProjectLogo = (id: string) => {
     setValues((prev) => ({ ...prev, image: "" }));
   };
-  const removeTechStack = (id: string) => {
-    const newArr = techStack.filter((item) => item._id != id);
-    setTechStack(newArr);
+  const removeTechStack = (id: string | number) => {
+    setTechStack((prev) => {
+      return prev.map((item) => {
+        if (item._id === id) {
+          return { ...item, isSelected: false };
+        } else {
+          return item;
+        }
+      });
+    });
   };
 
   const handleEditClick = (e: existingProjectsType) => {
+    setTechStack((prev) => prev.map((tech) => (tech.isSelected ? { ...tech, isSelected: false } : tech)));
     setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active });
-    setTechStack(e.tech);
+    e.tech.forEach((item) => {
+      setTechStack((prevTechStack) => prevTechStack.map((tech) => (tech.tech_name === item.tech_name ? { ...tech, isSelected: true } : tech)));
+    });
   };
 
   const handleSubmit = async () => {
@@ -129,7 +124,7 @@ function EditProjectsBox(props: props) {
     }
     let techTempStack: any[] = [];
     techStack.map((item) => {
-      if (item.image.length) {
+      if (item.isSelected) {
         techTempStack.push({
           tech_name: item.tech_name,
           image: item.image,
@@ -233,9 +228,15 @@ function EditProjectsBox(props: props) {
     setLoading(false);
   };
 
+  const handleIconModal = () => {
+    setIconModal(!iconModal);
+  };
+
   useEffect(() => {
     FetchProductList();
+    Data.map((item) => setTechStack((prev) => [...prev, { ...item, isSelected: false }]));
   }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.navbar}>
@@ -287,34 +288,18 @@ function EditProjectsBox(props: props) {
           </div>
           <div className={styles.box}>
             <div className={styles.label}>Tech Stacks</div>
-            <div className={styles.add} onClick={addNewTech}>
+            <div className={styles.add} onClick={handleIconModal}>
               +
             </div>
             <div className={styles.techBox}>
-              {techStack.map((tech) => (
-                <div key={tech._id} className={styles.techContainer}>
-                  <input
-                    type="text"
-                    name={tech._id}
-                    value={tech.tech_name}
-                    onChange={(e) => handleTechNameChange(e, tech._id)}
-                    placeholder="Add Skill Name"
-                    className={styles.techInput}
-                  />
-                  <InputBox
-                    name="des"
-                    value={tech.image}
-                    handleTextAreaChange={(e) => handleTechUrlChange(e, tech._id)}
-                    handleChange={handleChange}
-                    type="textarea"
-                    placeholder="Paste Icon Url"
-                    row={3}
-                  />
-                  <div className={styles.techRebtn} onClick={() => removeTechStack(tech._id)}>
-                    Remove
+              {techStack.map((tech, index) => {
+                return tech.isSelected ? (
+                  <div key={tech._id} className={tech.isSelected ? styles.tech_selected : styles.tech}>
+                    <Image src={tech.image} width={50} height={50} className={styles.tech_image} alt="" />
+                    <div className={styles.tech_name}>{tech.tech_name}</div>
                   </div>
-                </div>
-              ))}
+                ) : null;
+              })}
             </div>
           </div>
           <div className={styles.btn} onClick={handleSubmit}>
@@ -331,6 +316,7 @@ function EditProjectsBox(props: props) {
           />
         </div>
       </div>
+      <TechSelectModal open={iconModal} handleModal={handleIconModal} list={techStack} onSelect={addNewTech} onDeSelect={removeTechStack} />
     </div>
   );
 }
