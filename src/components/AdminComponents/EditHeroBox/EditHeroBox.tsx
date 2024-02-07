@@ -19,6 +19,11 @@ type valuesType = {
   des: string;
   location: string;
   image: string;
+  name: string;
+  years: string;
+  projects: string;
+  skills: string;
+  resume: string;
   id?: string;
 };
 type props = {
@@ -39,7 +44,13 @@ function EditHeroBox(props: props) {
     des: "",
     image: "",
     location: "",
+    name: "",
+    years: "",
+    projects: "",
+    skills: "",
+    resume: "",
   });
+  console.log("values", values);
   const [loading, setLoading] = useState<boolean>(true);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [isImageChange, setIsImageChange] = useState<boolean>(false);
@@ -79,7 +90,7 @@ function EditHeroBox(props: props) {
           const res = await axios.post("/api/hero", body);
 
           if (res?.status == 200) {
-            setIsImageChange(false)
+            setIsImageChange(false);
             Swal.fire({
               icon: "success",
               title: res?.data?.message,
@@ -138,6 +149,17 @@ function EditHeroBox(props: props) {
             <ProfileImageBox id="" image={values.image} handleImage={handleImage} handleRemove={handleRemoveImage} />
           </div>
           <div className={styles.box}>
+            <div className={styles.label}>Name</div>
+            <InputBox
+              name="name"
+              value={values.name}
+              handleTextAreaChange={handleTextAreaChange}
+              handleChange={handleChange}
+              type="text"
+              placeholder="Name"
+            />
+          </div>
+          <div className={styles.box}>
             <div className={styles.label}>Title</div>
             <InputBox
               name="title"
@@ -182,7 +204,53 @@ function EditHeroBox(props: props) {
               placeholder="Location"
             />
           </div>
-
+          <div className={styles.bottom}>
+            <div className={styles.box}>
+              <div className={styles.label}>Total Working Years</div>
+              <InputBox
+                name="years"
+                value={values.years}
+                handleTextAreaChange={handleTextAreaChange}
+                handleChange={handleChange}
+                type="number"
+                placeholder="Enter total working years"
+              />
+            </div>
+            <div className={styles.box}>
+              <div className={styles.label}>Total Completed Projects</div>
+              <InputBox
+                name="projects"
+                value={values.projects}
+                handleTextAreaChange={handleTextAreaChange}
+                handleChange={handleChange}
+                type="number"
+                placeholder="Enter total Completed projects"
+              />
+            </div>
+            <div className={styles.box}>
+              <div className={styles.label}>Total Skill Learned</div>
+              <InputBox
+                name="skills"
+                value={values.skills}
+                handleTextAreaChange={handleTextAreaChange}
+                handleChange={handleChange}
+                type="number"
+                placeholder="Enter total skills learned"
+              />
+            </div>
+            
+          </div>
+          <div className={styles.box}>
+              <div className={styles.label}>Resume</div>
+              <InputBox
+                name="resume"
+                value={values.resume}
+                handleTextAreaChange={handleTextAreaChange}
+                handleChange={handleChange}
+                type="text"
+                placeholder="Paste Resume Link"
+              />
+            </div>
           <div className={styles.btn} onClick={handleSubmit}>
             {submitLoading ? "loading..." : "Submit"}
           </div>

@@ -38,6 +38,7 @@ let Icons: IconType[] = [
   { _id: 26, tech_name: "Jenkins", image: "https://img.icons8.com/color/48/jenkins.png" },
   { _id: 27, tech_name: "Boostrap", image: "https://img.icons8.com/color/48/bootstrap--v2.png" },
   { _id: 28, tech_name: "Rust", image: "https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/24/external-rust-is-a-multi-paradigm-system-programming-language-logo-shadow-tal-revivo.png" },
+  { _id: 29, tech_name: "Github", image: "https://img.icons8.com/ios-filled/50/github.png" },
 ];
 
 export default Icons;

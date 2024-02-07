@@ -11,6 +11,8 @@ type DataType = {
     type: string;
     des: string;
     image: string;
+    url: string;
+    github: string;
     tech: { tech_name: string; _id: string; image: string }[];
   }[];
 };

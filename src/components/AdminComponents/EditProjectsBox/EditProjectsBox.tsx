@@ -20,6 +20,8 @@ type valuesType = {
   type: string;
   des: string;
   image: string;
+  url: string;
+  github: string;
   active: boolean;
   _id?: string;
 };
@@ -29,6 +31,8 @@ type existingProjectsType = {
   type: string;
   des: string;
   image: string;
+  url: string;
+  github: string;
   active: boolean;
   tech: {
     tech_name: string;
@@ -60,6 +64,8 @@ function EditProjectsBox(props: props) {
     type: "",
     des: "",
     image: "",
+    url: "",
+    github: "",
     active: true,
   });
   const [techStack, setTechStack] = useState<techStackType>([]);
@@ -112,7 +118,7 @@ function EditProjectsBox(props: props) {
 
   const handleEditClick = (e: existingProjectsType) => {
     setTechStack((prev) => prev.map((tech) => (tech.isSelected ? { ...tech, isSelected: false } : tech)));
-    setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active });
+    setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active,url:e.url,github:e.github });
     e.tech.forEach((item) => {
       setTechStack((prevTechStack) => prevTechStack.map((tech) => (tech.tech_name === item.tech_name ? { ...tech, isSelected: true } : tech)));
     });
@@ -280,6 +286,30 @@ function EditProjectsBox(props: props) {
               type="textarea"
               placeholder="Description"
               row={3}
+            />
+          </div>
+          <div className={styles.box}>
+            <div className={styles.label}>Deployed URL</div>
+            <InputBox
+              name="url"
+              value={values.url}
+              handleTextAreaChange={handleTextAreaChange}
+              handleChange={handleChange}
+              type="text"
+              placeholder="Paste the deployment URL"
+          
+            />
+          </div>
+          <div className={styles.box}>
+            <div className={styles.label}>Github Link</div>
+            <InputBox
+              name="github"
+              value={values.github}
+              handleTextAreaChange={handleTextAreaChange}
+              handleChange={handleChange}
+              type="text"
+              placeholder="Paste the repo link"
+            
             />
           </div>
           <div className={styles.box}>

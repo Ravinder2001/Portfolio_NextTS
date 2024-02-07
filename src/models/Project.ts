@@ -27,6 +27,14 @@ const ProjectSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    url: {
+      type: String,
+      required: true,
+    },
+    github: {
+      type: String,
+      required: true,
+    },
     tech: [
       {
         tech_name: {

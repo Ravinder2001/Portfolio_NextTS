@@ -7,6 +7,10 @@ const HeroSchema = new Schema(
       required: true,
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -24,6 +28,22 @@ const HeroSchema = new Schema(
       required: true,
     },
     image: {
+      type: String,
+      required: true,
+    },
+    years: {
+      type: String,
+      required: true,
+    },
+    projects: {
+      type: String,
+      required: true,
+    },
+    skills: {
+      type: String,
+      required: true,
+    },
+    resume: {
       type: String,
       required: true,
     },

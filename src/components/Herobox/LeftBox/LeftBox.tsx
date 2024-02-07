@@ -9,6 +9,11 @@ type props = {
     role: string;
     des: string;
     location: string;
+    name: string;
+    years: string;
+    projects: string;
+    skills: string;
+    resume: string;
   };
 };
 function LeftBox(props: props) {
@@ -19,11 +24,11 @@ function LeftBox(props: props) {
       <div className={styles.role}>{data.role}</div>
       <div className={styles.des}>{data.des}</div>
       <div className={styles.location}>{data.location}</div>
-      <ResumeBtn />
+      <ResumeBtn  url={data.resume} />
       <div className={styles.bottom_container}>
-        <Stats count={2} isPlus={true} label="Years Experience" />
-        <Stats count={10} isPlus={false} label="Projects Completed" />
-        <Stats count={10} isPlus={false} label="Skills" />
+        <Stats count={Number(data.years)} isPlus={true} label="Years Experience" />
+        <Stats count={Number(data.projects)} isPlus={false} label="Projects Completed" />
+        <Stats count={Number(data.skills)} isPlus={false} label="Skills" />
       </div>
     </div>
   );

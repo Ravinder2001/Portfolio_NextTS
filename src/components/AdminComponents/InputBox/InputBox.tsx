@@ -12,7 +12,7 @@ type props = {
   row?: number;
 };
 function InputBox(props: props) {
-  return props.type == "text" ? (
+  return props.type == "text"|| props.type=="number" ? (
     <input
       name={props.name}
       type={props.type}

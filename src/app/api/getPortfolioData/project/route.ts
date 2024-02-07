@@ -9,7 +9,7 @@ export const GET = async () => {
     
     const data = await Project.find(
       { relation_id: ENVConfig.relation_id, active: true }, 
-      { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1 }
+      { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1,url:1,github:1 }
     ).sort({ createdAt: -1 }); // Add this line to sort by created_at in ascending order
 
     return new Response(JSON.stringify({ data }), { status: 200 });

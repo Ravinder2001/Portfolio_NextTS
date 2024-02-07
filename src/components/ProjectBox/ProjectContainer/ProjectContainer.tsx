@@ -3,6 +3,7 @@ import styles from "./style.module.scss";
 import Image from "next/image";
 import LucideIcons from "@/icons/LucideIcons";
 import VisitBtn from "./VisitBtn/VisitBtn";
+import GithubBtn from "./GithubBtn/GithubBtn";
 
 type props = {
   projectData: {
@@ -11,6 +12,8 @@ type props = {
     type: string;
     des: string;
     image: string;
+    url: string;
+    github: string;
     tech: { tech_name: string; _id: string; image: string }[];
   };
   index: number;
@@ -33,7 +36,10 @@ function ProjectContainer(props: props) {
             </div>
           ))}
         </div>
-        <VisitBtn />
+        <div className={styles.btn_group}>
+          <VisitBtn url={props.projectData.url} />
+          <GithubBtn url={props.projectData.github} />
+        </div>
       </div>
     </div>
   );

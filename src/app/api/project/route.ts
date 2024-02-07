@@ -50,7 +50,10 @@ export const GET = async () => {
     }
 
     await connectToDB();
-    const data = await Project.find({ relaiton_id: userSession?.user.name }, { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1, active: 1 });
+    const data = await Project.find(
+      { relaiton_id: userSession?.user.name },
+      { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1, active: 1, url: 1, github: 1 }
+    );
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (err: any) {
     return new Response(err.message, { status: 400 });

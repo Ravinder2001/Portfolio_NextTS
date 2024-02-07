@@ -1,13 +1,25 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import LabelBox from "./LabelBox/LabelBox";
 import styles from "./style.module.scss";
 import { Link } from "react-scroll";
+import axios from "axios";
 function Navbar() {
+  const [name, setName] = useState<string>("");
+  const fetchName = async () => {
+    const res = await axios.get("/api/getPortfolioData/hero?name=true");
+    let dbName = res?.data.data.name.split(" ");
+    setName(dbName[0]);
+  };
+  useEffect(() => {
+    fetchName();
+  }, []);
   return (
     <div className={styles.container}>
       <Link activeClass="active" to="Hero" spy={true} smooth={true} offset={-100} duration={500}>
-        <span className={styles.left}>Ravinder.<span className={styles.cast}>dev</span></span>
+        <span className={styles.left}>
+          {name.length ? name : "Portfolio"}.<span className={styles.cast}>dev</span>
+        </span>
       </Link>
 
       <div className={styles.middle}>

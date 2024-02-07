@@ -49,7 +49,7 @@ export const GET = async () => {
       return new Response("Unauthorized", { status: 401 });
     }
     await connectToDB();
-    const data = await Hero.findOne({ relaiton_id: userSession?.user.name }, { _id: 1, title: 1, role: 1, des: 1, location: 1, image: 1 });
+    const data = await Hero.findOne({ relaiton_id: userSession?.user.name }, { _id: 1, title: 1, role: 1, des: 1, location: 1, image: 1,name:1,years:1,projects:1,skills:1,resume:1 });
 
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (error: any) {

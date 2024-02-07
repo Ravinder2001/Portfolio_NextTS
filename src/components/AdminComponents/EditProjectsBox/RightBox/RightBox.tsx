@@ -1,7 +1,6 @@
 import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
 import styles from "./style.module.scss";
 import Image from "next/image";
-import Images from "@/icons/Images";
 import LucideIcons from "@/icons/LucideIcons";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -15,6 +14,8 @@ type existingDataType = {
     type: string;
     des: string;
     image: string;
+    url: string;
+    github: string;
     active: boolean;
     tech: {
       tech_name: string;
@@ -29,6 +30,8 @@ type existingDataType = {
     type: string;
     des: string;
     image: string;
+    url: string;
+    github: string;
     active: boolean;
     tech: {
       tech_name: string;

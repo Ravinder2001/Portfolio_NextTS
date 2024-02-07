@@ -22,7 +22,6 @@ function Page() {
   const dispatch = useDispatch();
   const sectionList = useSelector((state: RootState) => state.SectionListReducer.list);
   const selected = useSelector((state: RootState) => state.SectionListReducer.selected);
-  console.log("🚀  selected:", selected)
 
   const GetFilteredData = (name: string) => {
     let arr = sectionList.find((section) => section.name == name);
