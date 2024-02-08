@@ -14,7 +14,8 @@ import { ENVConfig } from "@/utils/Config";
 export const dynamic = "force-dynamic";
 
 const GetData = async () => {
-  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/section`, { cache: "no-store", next: { revalidate: 5 } });
+  console.log("ENVConfig-----",ENVConfig)
+  const res = await fetch(`${ENVConfig.baseURL}/api/getPortfolioData/section`);
   if (!res.ok) {
     return { data: null };
   }
