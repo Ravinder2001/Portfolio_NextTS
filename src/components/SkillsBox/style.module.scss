@@ -39,12 +39,12 @@
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
 }
 .name {
-  font-size: 24px;
+  font-size: 20px;
   color: black;
   margin-top: 10px;
 }
