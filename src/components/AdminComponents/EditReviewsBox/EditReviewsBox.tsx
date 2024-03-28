@@ -9,10 +9,13 @@ import DefaultToogle from "../ToogleBtn/ToogleBtn";
 import RightBox from "./RightBox/RightBox";
 
 import styles from "./style.module.scss";
+import ImageBox from "../ImageBox/ImageBox";
+import { convertToBase64 } from "@/utils/Function";
 
 type valuesType = {
   name: string;
   des: string;
+  image: string;
   star: number;
   _id?: string;
   active: boolean;
@@ -20,6 +23,7 @@ type valuesType = {
 type existingReviews = {
   name: string;
   des: string;
+  image: string;
   star: number;
   _id: string;
   active: boolean;
@@ -42,6 +46,7 @@ function EditReviewsBox(props: props) {
     name: "",
     star: 0,
     des: "",
+    image:"",
     active: true,
   });
   const [existingReviews, setExistingReviews] = useState<existingReviews[]>([]);
@@ -60,6 +65,17 @@ function EditReviewsBox(props: props) {
 
   const handleEditClick = (e: existingReviews) => {
     setValues(e);
+  };
+
+  const handleImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const res = await convertToBase64(e.target.files[0]);
+      setValues((prev) => ({ ...prev, image: res }));
+    }
+  };
+
+  const removeProjectLogo = (id: string) => {
+    setValues((prev) => ({ ...prev, image: "" }));
   };
 
   const handleSubmit = async () => {
@@ -167,7 +183,11 @@ function EditReviewsBox(props: props) {
               row={3}
             />
           </div>
-
+          <div className={styles.box}>
+            <div className={styles.label}>User Image</div>
+            <ImageBox handleImage={handleImage} image={values.image} handleRemove={removeProjectLogo} id="" />
+          </div>
+          
           <div className={styles.btn} onClick={handleSubmit}>
             {submitLoading ? "loading..." : "Submit"}
           </div>

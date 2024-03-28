@@ -8,7 +8,6 @@ import SkillsBox from "@/components/SkillsBox/SkillsBox";
 import ProjectBox from "@/components/ProjectBox/ProjectBox";
 import ReviewBox from "@/components/ReviewBox/ReviewBox";
 import AboutBox from "@/components/AboutBox/AboutBox";
-import ContactBox from "@/components/ContactBox/ContactBox";
 import { ENVConfig } from "@/utils/Config";
 
 export const dynamic = "force-dynamic";
@@ -46,8 +45,6 @@ async function page() {
               return <ReviewBox key={item._id} />;
             case "About":
               return <AboutBox key={item._id} />;
-            case "Contact Us":
-              return <ContactBox key={item._id} />;
             default:
               return null; // or any default behavior
           }

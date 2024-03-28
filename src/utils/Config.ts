@@ -10,4 +10,5 @@ export const ENVConfig = {
   google_experience_folder_id: process.env.GOOGLE_EXPERIENCE_FOLDER_ID ?? "",
   google_project_folder_id: process.env.GOOGLE_PROJECT_FOLDER_ID ?? "",
   google_about_folder_id: process.env.GOOGLE_ABOUT_FOLDER_ID ?? "",
+  google_reviews_folder_id: process.env.GOOGLE_REVIEWS_FOLDER_ID ?? "",
 };

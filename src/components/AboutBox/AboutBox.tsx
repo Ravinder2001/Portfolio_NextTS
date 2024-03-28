@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ENVConfig } from "@/utils/Config";
 
 import styles from "./style.module.scss";
+import ContactBox from "./ContactBox/ContactBox";
 
 type dataType = {
   data: { _id: string; title: string; des: string; image: string };
@@ -27,6 +28,7 @@ async function AboutBox() {
         <div className={styles.right}>
           <div className={styles.main}>{data.title}</div>
           <div className={styles.sub}>{data.des}</div>
+          <ContactBox/>
         </div>
       </div>
     </div>

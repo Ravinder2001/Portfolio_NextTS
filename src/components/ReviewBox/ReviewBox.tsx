@@ -12,6 +12,7 @@ type dataType = {
     name: string;
     star: number;
     des: string;
+    image: string;
   }[];
 };
 

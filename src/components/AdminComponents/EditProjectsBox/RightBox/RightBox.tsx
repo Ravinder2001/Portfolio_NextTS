@@ -19,6 +19,8 @@ type existingDataType = {
     url: string;
     github: string;
     active: boolean;
+    isUrlVisible: boolean;
+    isGithubVisible: boolean;
     tech: {
       tech_name: string;
       image: string;
@@ -35,6 +37,8 @@ type existingDataType = {
     url: string;
     github: string;
     active: boolean;
+    isUrlVisible: boolean;
+    isGithubVisible: boolean;
     tech: {
       tech_name: string;
       image: string;

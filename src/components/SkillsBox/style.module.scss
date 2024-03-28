@@ -9,7 +9,7 @@
 .heading {
   color: white;
   margin-left: 20px;
-  font-size: 28px;
+  font-size: 40px;
   font-weight: bold;
   //   font-size: 72px;
   background: linear-gradient(to right, #eb9a30, #b9510b, #ed1bed, #e2cb20);
@@ -22,7 +22,7 @@
   justify-content: center;
   flex-wrap: wrap;
   // border: 1px solid red;
-  width: 80%;
+  width: 95%;
   margin: auto;
 }
 .box {
@@ -39,12 +39,15 @@
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 .img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 .name {
   font-size: 20px;
   color: black;
   margin-top: 10px;
+}
+@media only screen and (max-width: 768px) {
+
 }

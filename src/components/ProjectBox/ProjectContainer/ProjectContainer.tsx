@@ -15,6 +15,8 @@ type props = {
     image: string;
     url: string;
     github: string;
+    isUrlVisible: boolean;
+    isGithubVisible: boolean;
     tech: { tech_name: string; _id: string; image: string }[];
   };
   index: number;
@@ -39,8 +41,8 @@ function ProjectContainer(props: props) {
           ))}
         </div>
         <div className={styles.btn_group}>
-          <VisitBtn url={props.projectData.url} />
-          <GithubBtn url={props.projectData.github} />
+          {props.projectData.isUrlVisible ? <VisitBtn url={props.projectData.url} /> : null}
+          {props.projectData.isGithubVisible ? <GithubBtn url={props.projectData.github} /> : null}
         </div>
       </div>
     </div>

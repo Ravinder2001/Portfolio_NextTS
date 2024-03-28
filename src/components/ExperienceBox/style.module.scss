@@ -5,8 +5,8 @@
   height: auto;
   display: flex;
   justify-content: flex-end;
-  background: rgb(2,0,36);
-background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(240,160,160,1) 0%, rgba(231,131,234,1) 100%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(240, 160, 160, 1) 0%, rgba(231, 131, 234, 1) 100%);
 }
 .box {
   margin-bottom: 20px;
@@ -19,10 +19,9 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(240,160,160,1) 0%, rg
   padding: 10px;
   // border: 1px solid red;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  
 }
 .heading {
-  font-size: 24px;
+  font-size: 40px;
   font-weight: bold;
   margin-left: 40px;
   margin-top: 10px;
@@ -32,4 +31,19 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(240,160,160,1) 0%, rg
 }
 .des {
   width: 50%;
+}
+
+@media only screen and (max-width: 768px) {
+  .box {
+    margin-top: 0px;
+    width: 100%;
+    margin-right: 0px;
+  }
+  .heading{
+    margin-left: 0px;
+    text-align: center;
+  }
+  .box{
+    margin-bottom: 0px;
+  }
 }
