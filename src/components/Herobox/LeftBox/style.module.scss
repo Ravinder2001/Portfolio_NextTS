@@ -1,5 +1,5 @@
 .container {
-  width: 40%;
+  width: 50%;
   // border: 1px solid red;
   height: 100%;
   display: flex;
@@ -36,4 +36,58 @@
 }
 .box {
 }
+.container a {
+  text-decoration: none;
+  font-size: 34px;
+  color: white;
+}
 
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+  .container a {
+    font-size: 28px;
+  }
+  .des {
+    font-size: 18px;
+  }
+  .role {
+    font-size: 20px;
+  }
+  .location {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .container a {
+    font-size: 28px;
+  }
+  .des {
+    font-size: 16px;
+  }
+  .role {
+    font-size: 20px;
+  }
+  .location {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .container a {
+    font-size: 32px;
+  }
+  .des {
+    font-size: 18px;
+  }
+  .role {
+    font-size: 22px;
+  }
+  .location {
+    font-size: 22px;
+  }
+}

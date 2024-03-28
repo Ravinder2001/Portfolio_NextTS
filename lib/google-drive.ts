@@ -20,11 +20,15 @@ type fileMetadata = {
 };
 
 export const UploadImageToDrive = async (image: string, fileMetadata: fileMetadata) => {
+  console.log("🚀  fileMetadata:", fileMetadata)
   return new Promise((resolve: any, reject) => {
     const uploadImg = image.split(/,(.+)/)[1];
+    console.log("🚀  uploadImg:", uploadImg)
     const buf: Buffer = Buffer.from(uploadImg, "base64");
+    console.log("🚀  buf:", buf)
     const bs = new stream.PassThrough();
     bs.end(buf);
+    console.log("🚀  bs:", bs)
 
     // Check if file with the same name already exists
     drive.files.list({
@@ -35,6 +39,7 @@ export const UploadImageToDrive = async (image: string, fileMetadata: fileMetada
       if (err) {
         reject(err.message);
       }
+      
 
       if (response.data.files.length > 0) {
         // File with the same name exists, delete it
@@ -62,6 +67,7 @@ export const UploadImageToDrive = async (image: string, fileMetadata: fileMetada
               if (err) {
                 reject(err.message);
               }
+              console.log("ssss",file)
 
               await drive.permissions.create({
                 fileId: file.data.id,
@@ -89,9 +95,10 @@ export const UploadImageToDrive = async (image: string, fileMetadata: fileMetada
           },
           async (err: any, file: any) => {
             if (err) {
+              console.log("err-------",err)
               reject(err.message);
             }
-
+            console.log("0--------------------------",file)
             await drive.permissions.create({
               fileId: file.data.id,
               requestBody: {

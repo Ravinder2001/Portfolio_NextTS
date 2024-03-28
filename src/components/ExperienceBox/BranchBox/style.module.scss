@@ -1,4 +1,4 @@
-.container{
+.container {
   width: 100%;
   height: auto;
   // border: 1px solid red;
@@ -15,7 +15,6 @@
   /* padding: 100px 0;  */
   /* background-color: #111; */
 }
-
 
 .timeline {
   width: 90%;
@@ -51,7 +50,6 @@
 .company_name {
   color: black;
   font-size: 24px;
- 
 }
 .role {
   color: black;
@@ -63,18 +61,31 @@
   color: rgb(61, 61, 61);
   font-size: 16px;
   margin-top: 5px;
-  
 }
 .about {
   margin-top: 10px;
   color: black;
   font-size: 16px;
-  
 }
-.img{
+.img {
   width: 100px;
   height: 100px;
   object-fit: contain;
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .company_name {
+    font-size: 20px;
+  }
+  .role {
+    font-size: 18px;
+  }
+  .duration {
+    font-size: 14px;
+  }
+  .about {
+    font-size: 14px;
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -125,5 +136,35 @@
 
   .timeline ul li:hover::before {
     background-color: white;
+  }
+
+
+}
+@media only screen and (max-width: 768px) {
+
+.timeline{
+  width: 95%;
+}
+.container1{
+  border: none;
+  margin-top: 20px;
+}
+  .timeline_content{
+    flex-direction: column-reverse;
+   align-items: center;
+  }
+  .timeline_content_rev{
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .company_name{
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .left_box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -14,6 +14,8 @@ type DataType = {
     image: string;
     url: string;
     github: string;
+    isUrlVisible: boolean;
+    isGithubVisible: boolean;
     tech: { tech_name: string; _id: string; image: string }[];
   }[];
 };

@@ -17,7 +17,7 @@ function BranchBox(props: props) {
               <li key={exp._id}>
                 <div
                   className={`${index % 2 === 0 ? styles.timeline_content : styles.timeline_content_rev}`}
-                  data-aos={index % 2 === 0 ? "flip-right" : "flip-left"}
+                  data-aos="zoom-in"
                 >
                   <div className={styles.left_box} style={{ marginLeft: index % 2 != 0 ? "10px" : "0px" }}>
                     <div className={styles.company_name}>{exp.company}</div>

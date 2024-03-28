@@ -23,6 +23,8 @@ type valuesType = {
   url: string;
   github: string;
   active: boolean;
+  isUrlVisible: boolean;
+  isGithubVisible: boolean;
   _id?: string;
 };
 type existingProjectsType = {
@@ -34,6 +36,8 @@ type existingProjectsType = {
   url: string;
   github: string;
   active: boolean;
+  isUrlVisible: boolean;
+  isGithubVisible: boolean;
   tech: {
     tech_name: string;
     image: string;
@@ -60,7 +64,7 @@ type props = {
 
 function EditProjectsBox(props: props) {
   const { data: session } = useSession();
-  
+
   const [values, setValues] = useState<valuesType>({
     name: "",
     type: "",
@@ -69,6 +73,8 @@ function EditProjectsBox(props: props) {
     url: "",
     github: "",
     active: true,
+    isUrlVisible: true,
+    isGithubVisible: true,
   });
   const [techStack, setTechStack] = useState<techStackType>([]);
   const [existingProjects, setExistingProjects] = useState<existingProjectsType[]>([]);
@@ -120,7 +126,7 @@ function EditProjectsBox(props: props) {
 
   const handleEditClick = (e: existingProjectsType) => {
     setTechStack((prev) => prev.map((tech) => (tech.isSelected ? { ...tech, isSelected: false } : tech)));
-    setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active,url:e.url,github:e.github });
+    setValues({ _id: e._id, name: e.name, type: e.type, des: e.des, image: e.image, active: e.active, url: e.url, github: e.github,isGithubVisible:e.isGithubVisible,isUrlVisible:e.isUrlVisible });
     e.tech.forEach((item) => {
       setTechStack((prevTechStack) => prevTechStack.map((tech) => (tech.tech_name === item.tech_name ? { ...tech, isSelected: true } : tech)));
     });
@@ -291,7 +297,16 @@ function EditProjectsBox(props: props) {
             />
           </div>
           <div className={styles.box}>
-            <div className={styles.label}>Deployed URL</div>
+            <div className={styles.urlBox}>
+              <div className={styles.label}>Deployed URL</div>
+              <DefaultToogle
+                name="isUrlVisible"
+                value={values.isUrlVisible}
+                handleChange={(e) => {
+                  setValues((prev) => ({ ...prev, isUrlVisible: e.target.checked }));
+                }}
+              />
+            </div>
             <InputBox
               name="url"
               value={values.url}
@@ -299,11 +314,19 @@ function EditProjectsBox(props: props) {
               handleChange={handleChange}
               type="text"
               placeholder="Paste the deployment URL"
-          
             />
           </div>
           <div className={styles.box}>
-            <div className={styles.label}>Github Link</div>
+            <div className={styles.urlBox}>
+              <div className={styles.label}>Github Link</div>
+              <DefaultToogle
+                name="isGithubVisible"
+                value={values.isGithubVisible}
+                handleChange={(e) => {
+                  setValues((prev) => ({ ...prev, isGithubVisible: e.target.checked }));
+                }}
+              />
+            </div>
             <InputBox
               name="github"
               value={values.github}
@@ -311,7 +334,6 @@ function EditProjectsBox(props: props) {
               handleChange={handleChange}
               type="text"
               placeholder="Paste the repo link"
-            
             />
           </div>
           <div className={styles.box}>

@@ -18,7 +18,7 @@ async function ExperienceBox() {
   return data ? (
     <div className={styles.container} id="Experience">
       <div className={styles.box}>
-        <div className={styles.heading}>Experience</div>
+        <div className={styles.heading}>My Experience</div>
         <BranchBox expData={data} />
       </div>
     </div>

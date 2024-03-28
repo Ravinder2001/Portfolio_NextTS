@@ -31,8 +31,16 @@ const ProjectSchema = new Schema(
       type: String,
       required: true,
     },
+    isUrlVisible: {
+      type: Boolean,
+      required: true,
+    },
     github: {
       type: String,
+      required: true,
+    },
+    isGithubVisible: {
+      type: Boolean,
       required: true,
     },
     tech: [

@@ -30,6 +30,7 @@ let options = {
   github: "Github",
   linkedin: "Linkedin",
   whatsapp: "WhatsApp",
+  instagram: "Instagram",
 };
 
 function EditContactUs(props: props) {
@@ -53,8 +54,14 @@ function EditContactUs(props: props) {
     link: "",
     active: false,
   });
+  const [instagram, setInstagram] = useState<contactType>({
+    name: "",
+    link: "",
+    active: false,
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("ee",e.target.name)
     switch (e.target.name) {
       case options.github:
         return setGithub((prev) => ({ ...prev, link: e.target.value }));
@@ -62,6 +69,8 @@ function EditContactUs(props: props) {
         return setLinkedin((prev) => ({ ...prev, link: e.target.value }));
       case options.whatsapp:
         return setWhatsapp((prev) => ({ ...prev, link: e.target.value }));
+      case options.instagram:
+        return setInstagram((prev) => ({ ...prev, link: e.target.value }));
       default:
         return e.target.value;
     }
@@ -75,6 +84,8 @@ function EditContactUs(props: props) {
         return setLinkedin((prev) => ({ ...prev, active: e.target.checked }));
       case options.whatsapp:
         return setWhatsapp((prev) => ({ ...prev, active: e.target.checked }));
+      case options.instagram:
+        return setInstagram((prev) => ({ ...prev, active: e.target.checked }));
       default:
         return e.target.value;
     }
@@ -167,6 +178,9 @@ function EditContactUs(props: props) {
           if (item.name == options.whatsapp) {
             setWhatsapp(item);
           }
+          if (item.name == options.instagram) {
+            setInstagram(item);
+          }
         });
       }
       setLoading(false);
@@ -210,6 +224,13 @@ function EditContactUs(props: props) {
             <div className={styles.sub}>
               <input type="text" name={whatsapp.name} value={whatsapp.link} onChange={handleChange} className={styles.input} />
               <DefaultToogle value={whatsapp.active} handleChange={handleToogle} name={whatsapp.name} />
+            </div>
+          </div>
+          <div className={styles.box}>
+            <div className={styles.title}>{options.instagram}</div>
+            <div className={styles.sub}>
+              <input type="text" name={instagram.name} value={instagram.link} onChange={handleChange} className={styles.input} />
+              <DefaultToogle value={instagram.active} handleChange={handleToogle} name={instagram.name} />
             </div>
           </div>
           <div className={styles.btn} onClick={handleUpdate}>

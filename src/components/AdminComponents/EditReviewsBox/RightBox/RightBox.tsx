@@ -6,18 +6,20 @@ import LucideIcons from "@/icons/LucideIcons";
 import Loader from "../../Loader/Loader";
 
 import styles from "./style.module.scss";
+import Image from "next/image";
 
 type existingDataType = {
   existingData: {
     name: string;
     des: string;
+    image: string;
     star: number;
     _id: string;
     active: boolean;
   }[];
-  handleEditClick: (e: { name: string; des: string; star: number; _id: string; active: boolean }) => void;
+  handleEditClick: (e: { name: string; des: string; image: string; star: number; _id: string; active: boolean }) => void;
   loading: boolean;
-  FetchExistingReviews:()=>void
+  FetchExistingReviews: () => void;
 };
 
 function RightBox(props: existingDataType) {
@@ -35,7 +37,7 @@ function RightBox(props: existingDataType) {
         try {
           const res = await axios.patch("/api/review", { id });
           if (res?.status == 200) {
-            props.FetchExistingReviews()
+            props.FetchExistingReviews();
             Swal.fire({
               title: "Deleted!",
               text: res?.data.message,
@@ -52,7 +54,7 @@ function RightBox(props: existingDataType) {
       }
     });
   };
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.heading}>Existing Reviews</div>
@@ -63,9 +65,12 @@ function RightBox(props: existingDataType) {
           {props.existingData.map((item) => (
             <div className={styles.box} key={item._id}>
               <div className={styles.right}>
-                <div>
-                  <div className={styles.title}>{item.name}</div>
-                  <div className={styles.role}>{item.star}</div>
+                <div  className={styles.imgBox}>
+                  <Image src={item.image} alt="" className={styles.img} width={20} height={20} />
+                  <div className={styles.details}>
+                    <div className={styles.title}>{item.name}</div>
+                    <div className={styles.role}>{item.star}</div>
+                  </div>
                 </div>
                 <div className={styles.footer}>
                   <div className={styles.icon} onClick={() => props.handleEditClick(item)}>

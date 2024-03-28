@@ -12,6 +12,7 @@ export const POST = async (request: Request) => {
     if (!userSession) {
       return new Response("Unauthorized", { status: 401 });
     }
+    await connectToDB();
 
     const body = await request.json();
     const projectName = body.name.split(" ")[0].toLowerCase();
@@ -52,7 +53,7 @@ export const GET = async () => {
     await connectToDB();
     const data = await Project.find(
       { relaiton_id: userSession?.user.name },
-      { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1, active: 1, url: 1, github: 1 }
+      { _id: 1, name: 1, type: 1, des: 1, image: 1, tech: 1, active: 1, url: 1, github: 1,isUrlVisible:1,isGithubVisible:1 }
     );
     return new Response(JSON.stringify({ data }), { status: 200 });
   } catch (err: any) {

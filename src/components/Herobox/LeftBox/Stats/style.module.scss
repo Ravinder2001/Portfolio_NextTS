@@ -1,5 +1,5 @@
 .box {
- 
+ width: auto;
 }
 .number {
   font-size: 22px;
@@ -10,4 +10,26 @@
   font-size: 14px;
   margin-left: 5px;
   color: white;
+}
+
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .number {
+    font-size: 20px;
+
+  }
+  .label {
+    font-size: 12px;
+
+  }
+}
+@media only screen and (max-width: 768px) {
+  .number {
+    font-size: 18px;
+
+  }
+  .label {
+    font-size: 12px;
+    margin-left: 2px;
+  }
 }
